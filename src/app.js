@@ -36,7 +36,7 @@ const productById = new Map(products.map((product) => [product.id, product]));
 // Only trusted, authored strings (including intentional <br> tags) become HTML here.
 const english = {
   skip: 'Skip to content',
-  previewBar: 'OVAMO — an interactive concept. Shopping is not available yet.',
+  previewBar: 'OVAMO — a retail concept. Retail purchases are not available yet.',
   aboutPreview: 'About the project',
   navShop: 'Explore the collection',
   navStores: 'Our places',
@@ -49,6 +49,7 @@ const english = {
   heroDescription: 'A little treat for your break. Something refreshing for the road. A memory to take home. Find it all in one little place — ovamo.',
   explore: 'Take a little look',
   findUs: 'Find our places',
+  brandGuideDownload: 'Download visual identity (PDF)',
   heroFootnote: 'From the coast, for your everyday.',
   sticker: 'Hello.<br>Come in.',
   imageCaption: 'Store concept visualisation',
@@ -65,6 +66,22 @@ const english = {
   storyTitle: 'It feels good<br>to have your own place.',
   storyBody: 'A familiar smile. Your favourite little thing. Something new that catches your eye. We imagine OVAMO as part of your day — easy, cheerful and always close by.',
   storyLink: 'Discover where our story begins',
+  identityOfferEyebrow: 'OVAMO / VISUAL IDENTITY',
+  identityOfferTitle: 'A visual identity<br>for your stores.',
+  identityOfferIntro: 'A logo, colours and guidelines that connect your stores, packaging and digital channels. A complete package prepared for Classic Shop d.o.o.',
+  identityScopeLogo: 'Logo and its variations',
+  identityScopePalette: 'Colour palette and typography',
+  identityScopeGuide: '18-page brand guidelines',
+  identityScopeTemplates: 'Icons and editable templates',
+  identityScopeFiles: 'SVG vectors and PNG files',
+  identityScopeRefinement: 'One final refinement round',
+  identityGuideNote: '18 pages · in Croatian',
+  identityOfferFor: 'OFFER FOR CLASSIC SHOP D.O.O.',
+  identityOfferPrice: '€2,000',
+  identityOfferOnce: 'One-time payment · complete identity package',
+  identityOfferPay: 'Pay with Stripe',
+  identityCheckoutNote: 'Opens the Stripe payment page in a new tab.',
+  identityOfferHandover: 'We deliver the final package directly after payment is confirmed and the agreed final refinements are completed.',
   storesEyebrow: 'OUR STORY STARTS ON THE COAST.',
   storesTitle: 'See you around town.',
   storesAside: 'Split and Zadar.<br>Our story is just beginning.',
@@ -127,7 +144,7 @@ const english = {
   footerMessage: 'Whenever you need a little something.',
   footerCredit: 'Brand concept for Classic Shop · 2026.',
   resetDemo: 'Reset the demo',
-  footerDisclaimer: 'Interactive design prototype. Illustrative products and data. No real orders, payments or personal-data collection by this application.',
+  footerDisclaimer: 'The catalogue, inventory and apps use sample data. The demo catalogue does not accept orders. The visual identity is purchased separately through Stripe.',
   cartTitle: 'Your little collection.',
   wholesaleTitle: 'Your next top-up.',
   wholesaleDescription: 'Try choosing full packs and reviewing a sample quotation. Prices are illustrative, not a commercial offer. Nothing is submitted.',
@@ -290,7 +307,7 @@ function aiResponse() {
 }
 
 function renderProject() {
-  $('#project-content').innerHTML = `<div class="project-copy"><p>${copy('<strong>OVAMO</strong> je odabrani smjer za naziv trgovina tvrtke <strong>Classic Shop</strong>. Ovaj prvi koncept spaja vizualni identitet i način na koji bi povezano poslovanje moglo izgledati.', '<strong>OVAMO</strong> is the selected store-brand direction for <strong>Classic Shop</strong>. This first concept brings together the visual identity and a view of how the connected business could work.')}</p><div class="project-chips"><span>HR / EN</span><span>${copy('Demo katalog', 'Demo collection')}</span><span>${copy('B2B pakiranja', 'B2B packs')}</span><span>${copy('Pregled sustava', 'System overview')}</span></div><h3>${copy('Što možeš isprobati?', 'What can you try?')}</h3><p>${copy('Pretraži 20 oglednih artikala, složi demo košaricu, isprobaj B2B pakiranja i prijam–prijenos–prodaju robe. Galerija prikazuje koncepte aplikacija za stvarni katalog od 2.000+ artikala.', 'Search 20 sample items, build a demo basket, try B2B packs and receive–transfer–sell stock. The gallery shows app concepts for the actual 2,000+ article catalogue.')}</p><h3>${copy('Što slijedi?', 'What comes next?')}</h3><p>${copy('Potvrda imena i prava na brend, stvarni artikli i poslovnice, izbor integracije s postojećim ERP/POS sustavom te razvoj sigurnog poslužiteljskog sustava. GitHub Pages služi za ovaj dizajnerski prototip; komercijalnu trgovinu treba objaviti na prikladnom hostingu.', 'Confirm the name and brand rights, real products and stores, choose an integration with the existing ERP/POS and develop a secure server backend. GitHub Pages hosts this design prototype; the commercial store needs suitable hosting.')}</p><h3>${copy('O podacima', 'About the data')}</h3><p>${copy('Proizvodi proizvođača su prijedlozi uvrštenja, a OVAMO proizvodi su koncepti. Sve cijene, pakiranja, zalihe i graf su ogledni. Slike prikazuju zamišljene trgovine i aplikacije. Aplikacija ne prima narudžbe, uplate ni osobne podatke. Preglednik može lokalno pohraniti jezik i demo košaricu; tipka „Resetiraj demo” briše te postavke.', 'Manufacturer products are proposed additions; OVAMO products are concepts. All prices, case packs, stock and the chart are illustrative. Images show imagined stores and apps. The app accepts no orders, payments or personal details. Your browser may store the language and demo basket locally; “Reset the demo” clears those preferences.')}</p><p><a href="./concepts.html">${copy('Galerija aplikacija za 2.000+ artikala', 'App concepts for 2,000+ articles')} ↗</a><br><a href="${repository}/blob/main/docs/stock-and-apps-blueprint.md" target="_blank" rel="noopener noreferrer">${copy('Zalihe, aplikacije i automatizacija', 'Stock, apps and automation blueprint')} ↗</a><br><a href="${repository}/blob/main/docs/business-research.md" target="_blank" rel="noopener noreferrer">${copy('Istraživanje poslovanja i propisa', 'Business and regulatory research')} ↗</a><br><a href="${repository}/blob/main/docs/production-architecture.md" target="_blank" rel="noopener noreferrer">${copy('Plan stvarnog sustava', 'Production system plan')} ↗</a><br><a href="${repository}/blob/main/docs/brand-direction.md" target="_blank" rel="noopener noreferrer">${copy('Vizualni smjer i provjera imena', 'Visual direction and name clearance')} ↗</a></p></div>`;
+  $('#project-content').innerHTML = `<div class="project-copy"><p>${copy('<strong>OVAMO</strong> je odabrani smjer za naziv trgovina tvrtke <strong>Classic Shop</strong>. Ovaj prvi koncept spaja vizualni identitet i način na koji bi povezano poslovanje moglo izgledati.', '<strong>OVAMO</strong> is the selected store-brand direction for <strong>Classic Shop</strong>. This first concept brings together the visual identity and a view of how the connected business could work.')}</p><div class="project-chips"><span>HR / EN</span><span>${copy('Demo katalog', 'Demo collection')}</span><span>${copy('B2B pakiranja', 'B2B packs')}</span><span>${copy('Pregled sustava', 'System overview')}</span></div><h3>${copy('Što možeš isprobati?', 'What can you try?')}</h3><p>${copy('Pretraži 20 oglednih artikala, složi demo košaricu, isprobaj B2B pakiranja i prijam–prijenos–prodaju robe. Galerija prikazuje koncepte aplikacija za stvarni katalog od 2.000+ artikala.', 'Search 20 sample items, build a demo basket, try B2B packs and receive–transfer–sell stock. The gallery shows app concepts for the actual 2,000+ article catalogue.')}</p><h3>${copy('Što slijedi?', 'What comes next?')}</h3><p>${copy('Potvrda imena i prava na brend, stvarni artikli i poslovnice, izbor integracije s postojećim ERP/POS sustavom te razvoj sigurnog poslužiteljskog sustava. GitHub Pages služi za ovaj dizajnerski prototip; komercijalnu trgovinu treba objaviti na prikladnom hostingu.', 'Confirm the name and brand rights, real products and stores, choose an integration with the existing ERP/POS and develop a secure server backend. GitHub Pages hosts this design prototype; the commercial store needs suitable hosting.')}</p><h3>${copy('O podacima', 'About the data')}</h3><p>${copy('Proizvodi proizvođača su prijedlozi uvrštenja, a OVAMO proizvodi su koncepti. Cijene u katalogu, pakiranja, zalihe i graf su ogledni. Slike prikazuju zamišljene trgovine i aplikacije. Demo katalog i sustav ne primaju narudžbe, uplate ni osobne podatke. Vizualni identitet ima zasebnu ponudu i vanjsku Stripe stranicu za plaćanje. Preglednik može lokalno pohraniti jezik i demo košaricu; tipka „Resetiraj demo” briše te postavke.', 'Manufacturer products are proposed additions; OVAMO products are concepts. Catalogue prices, case packs, stock and the chart are illustrative. Images show imagined stores and apps. The demo catalogue and system accept no orders, payments or personal details. The visual identity has a separate offer and an external Stripe payment page. Your browser may store the language and demo basket locally; “Reset the demo” clears those preferences.')}</p><p><a href="./concepts.html">${copy('Galerija aplikacija za 2.000+ artikala', 'App concepts for 2,000+ articles')} ↗</a><br><a href="${repository}/blob/main/docs/stock-and-apps-blueprint.md" target="_blank" rel="noopener noreferrer">${copy('Zalihe, aplikacije i automatizacija', 'Stock, apps and automation blueprint')} ↗</a><br><a href="${repository}/blob/main/docs/business-research.md" target="_blank" rel="noopener noreferrer">${copy('Istraživanje poslovanja i propisa', 'Business and regulatory research')} ↗</a><br><a href="${repository}/blob/main/docs/production-architecture.md" target="_blank" rel="noopener noreferrer">${copy('Plan stvarnog sustava', 'Production system plan')} ↗</a><br><a href="${repository}/blob/main/docs/brand-direction.md" target="_blank" rel="noopener noreferrer">${copy('Vizualni smjer i provjera imena', 'Visual direction and name clearance')} ↗</a></p></div>`;
 }
 
 function toast(message) {
