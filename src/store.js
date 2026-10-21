@@ -1,4 +1,4 @@
-import { products } from './data.js';
+import { products } from './data.js?v=20261021-2';
 
 const CART_KEY = 'ovamo-demo-cart-v1';
 

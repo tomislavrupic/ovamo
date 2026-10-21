@@ -1,8 +1,8 @@
-import { products, categories, stores, demoNotice } from './data.js';
-import { addToCart, setQuantity, cartSummary, filterProducts, loadCart, saveCart, formatMoney } from './store.js';
-import { productIllustration } from './illustrations.js';
-import { createStockDemo, applyStockEvent } from './stock-demo.js';
-import { stockSteps, renderStockPanel, renderSupportPanel } from './stock-ui.js';
+import { products, categories, stores, demoNotice } from './data.js?v=20261021-2';
+import { addToCart, setQuantity, cartSummary, filterProducts, loadCart, saveCart, formatMoney } from './store.js?v=20261021-2';
+import { productIllustration } from './illustrations.js?v=20261021-2';
+import { createStockDemo, applyStockEvent } from './stock-demo.js?v=20261021-2';
+import { stockSteps, renderStockPanel, renderSupportPanel } from './stock-ui.js?v=20261021-2';
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));

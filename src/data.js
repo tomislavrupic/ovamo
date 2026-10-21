@@ -1,4 +1,4 @@
-import { proposedPremiumProducts } from './premium.js';
+import { proposedPremiumProducts } from './premium.js?v=20261021-2';
 
 // Fictional showcase data for the OVAMO static design demo.
 // These are not actual SKUs, offers, prices, stock levels, or confirmed shop details.
