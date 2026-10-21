@@ -1,3 +1,5 @@
+import { proposedPremiumProducts } from './premium.js';
+
 // Fictional showcase data for the OVAMO static design demo.
 // These are not actual SKUs, offers, prices, stock levels, or confirmed shop details.
 export const demoNotice = {
@@ -13,7 +15,7 @@ export const categories = [
   { id: 'souvenirs', name: { hr: 'Suveniri', en: 'Souvenirs' } },
 ];
 
-export const products = [
+const originalConceptProducts = [
   {
     id: 'sunny-mandarin',
     name: { hr: 'Sunčana mandarina', en: 'Sunny mandarin' },
@@ -143,6 +145,9 @@ export const products = [
     badge: { hr: 'Zapiši trenutak', en: 'Keep the moment' },
   },
 ];
+
+// Twenty curated demo records, not the company's full 2,000+ article catalogue.
+export const products = [...proposedPremiumProducts, ...originalConceptProducts];
 
 const locationNotice = {
   hr: 'Ilustrativni prikaz grada. Adresa i radno vrijeme bit će dodani nakon potvrde.',

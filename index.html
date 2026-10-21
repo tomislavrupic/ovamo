@@ -1,14 +1,34 @@
 <!doctype html>
-<html lang="hr">
+<html lang="hr" prefix="og: https://ogp.me/ns#">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#FFF5E7">
   <meta name="description" content="OVAMO — mjesto za male stvari koje čine dobar dan. Istražite koncept trgovina, poklona i povezanog poslovanja.">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://tomislavrupic.github.io/ovamo/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OVAMO">
+  <meta property="og:locale" content="hr_HR">
+  <meta property="og:url" content="https://tomislavrupic.github.io/ovamo/">
+  <meta property="og:title" content="OVAMO — Male stvari. Dobar dan.">
+  <meta property="og:description" content="Koncept trgovina i aplikacija za povezano poslovanje. Istraži OVAMO identitet, premium asortiman i jednostavan tijek robe za 2.000+ artikala.">
+  <meta property="og:image" content="https://tomislavrupic.github.io/ovamo/assets/ovamo-share-v1.jpg">
+  <meta property="og:image:secure_url" content="https://tomislavrupic.github.io/ovamo/assets/ovamo-share-v1.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="OVAMO — Male stvari. Dobar dan. Vizualni koncept trgovine u toplim krem, koraljnim i tamnoljubičastim tonovima.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OVAMO — Male stvari. Dobar dan.">
+  <meta name="twitter:description" content="Trgovine. Aplikacije. Povezano poslovanje. Istraži OVAMO koncept za 2.000+ artikala.">
+  <meta name="twitter:image" content="https://tomislavrupic.github.io/ovamo/assets/ovamo-share-v1.jpg">
+  <meta name="twitter:image:alt" content="OVAMO wordmark, hrvatski slogan i koncept trgovine u mediteranskom ambijentu.">
   <title>ovamo — Male stvari. Dobar dan.</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="./styles/stock.css">
+  <link rel="stylesheet" href="./styles/workflow.css">
   <script type="module" src="./src/app.js"></script>
 </head>
 <body>
@@ -46,6 +66,8 @@
         <a href="#ponuda" data-i18n="navShop">Istraži ponudu</a>
         <a href="#trgovine" data-i18n="navStores">Naše trgovine</a>
         <a href="#partneri" data-i18n="navPartners">Za partnere</a>
+        <a href="#kako-radi" data-i18n="navWorkflow">Kako radi</a>
+        <a href="./concepts.html" data-i18n="navConcepts">Aplikacije</a>
       </nav>
       <div class="nav-actions">
         <button class="language-button" type="button" id="language-toggle" aria-label="Switch to English"><span id="language-current">HR</span><span class="language-slash">/</span><span id="language-next">EN</span></button>
@@ -83,6 +105,36 @@
       </div>
     </div>
 
+    <section class="workflow-section" id="kako-radi" aria-labelledby="workflow-title">
+      <div class="workflow-heading wrap">
+        <div><p class="workflow-kicker" data-i18n="workflowEyebrow">KAKO BI POVEZANI SUSTAV RADIO</p><h2 id="workflow-title" data-i18n="workflowTitle">Od dostave<br>do završene prodaje.</h2></div>
+        <p class="workflow-intro" data-i18n="workflowIntro">Jedan šifrarnik za 2.000+ artikala. Svaki prijam, prijenos i prodaja povezani su s istom evidencijom zaliha, uz jasan zadatak za svakog djelatnika.</p>
+      </div>
+      <ol class="workflow-steps wrap">
+        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">01</span><h3 data-i18n="workflow1Title">Zaprimi i skeniraj</h3><p data-i18n="workflow1Body">Otvori dobavljačevu isporuku, skeniraj barkod i potvrdi kartone, komade i stvarnu količinu. Zabilježi lot, rok trajanja i eventualni manjak.</p><span class="workflow-role" data-i18n="workflow1Role">Skladište · mobitel ili skener</span></li>
+        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">02</span><h3 data-i18n="workflow2Title">Premjesti i prihvati</h3><p data-i18n="workflow2Body">Odaberi trgovinu i otpremi robu. Zaliha ostaje „na putu” dok odredišna trgovina ne potvrdi koliko je robe stvarno primila.</p><span class="workflow-role" data-i18n="workflow2Role">Skladište → trgovina · dvije potvrde</span></li>
+        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">03</span><h3 data-i18n="workflow3Title">Prodaj ili isporuči</h3><p data-i18n="workflow3Body">Potvrđena POS prodaja razdužuje komade u toj trgovini. Web i B2B narudžbe prvo rezerviraju robu; otprema ili preuzimanje bilježi fizički izlaz.</p><span class="workflow-role" data-i18n="workflow3Role">Blagajna · webshop · veleprodaja</span></li>
+        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">04</span><h3 data-i18n="workflow4Title">Izdaj račun i uskladi</h3><p data-i18n="workflow4Body">Dogovoreni poslovni događaj pokreće izdavanje računa kroz povezani ERP ili posrednika. Dokument, fiskalna potvrda i plaćanje prate se zasebno.</p><span class="workflow-role" data-i18n="workflow4Role">Financije · automatizacija i provjera</span></li>
+      </ol>
+      <div class="workflow-proof wrap">
+        <div class="workflow-example"><h3 data-i18n="workflowExampleTitle">Istih 240 komada, od početka do kraja.</h3><p data-i18n="workflowExampleBody">Ogledni primjer: 10 kartona × 24 komada. Prijenos mijenja lokaciju; nakon prodaje 3 komada u poslovanju ostaje 237.</p></div>
+        <div class="workflow-table-scroll" tabindex="0" role="region" aria-labelledby="workflow-title">
+          <table class="workflow-table"><thead><tr><th scope="col" data-i18n="workflowColEvent">Potvrđeni događaj</th><th scope="col" data-i18n="workflowColWarehouse">Skladište</th><th scope="col" data-i18n="workflowColTransit">Na putu</th><th scope="col" data-i18n="workflowColShop">Trgovina</th><th scope="col" data-i18n="workflowColTotal">Fizički ukupno</th></tr></thead><tbody>
+            <tr><th scope="row" data-i18n="workflowRow1">Prijam 10 × 24</th><td>240</td><td>0</td><td>0</td><td>240</td></tr>
+            <tr><th scope="row" data-i18n="workflowRow2">Otprema 48</th><td>192</td><td>48</td><td>0</td><td>240</td></tr>
+            <tr><th scope="row" data-i18n="workflowRow3">Trgovina prihvati 48</th><td>192</td><td>0</td><td>48</td><td>240</td></tr>
+            <tr><th scope="row" data-i18n="workflowRow4">POS proda 3</th><td>192</td><td>0</td><td>45</td><td><strong>237</strong></td></tr>
+          </tbody></table>
+        </div>
+        <p class="workflow-rule" data-i18n="workflowRule">Ponovljena poruka ne smije dvaput razdužiti robu. Ponovno slanje računa ne smije stvoriti novu prodaju.</p>
+      </div>
+      <div class="workflow-automation wrap">
+        <article class="workflow-automation-card"><span class="workflow-tag" data-i18n="workflowAiTag">AI POMAŽE</span><h3 data-i18n="workflowAiTitle">Manje rutine. Jasne iznimke.</h3><p data-i18n="workflowAiBody">AI može pripremiti unos dokumenata, upozoriti na neobično stanje i sastaviti odgovor kupcu iz provjerenih podataka. Ljudi potvrđuju primljene količine, korekcije i povrate novca.</p></article>
+        <article class="workflow-automation-card"><span class="workflow-tag" data-i18n="workflowDeviceTag">JEDAN SUSTAV, RAZLIČITI EKRANI</span><h3 data-i18n="workflowDeviceTitle">Ured vidi cijelu sliku.</h3><p data-i18n="workflowDeviceBody">Računalo: pretraživ katalog, skupne izmjene i stanje po lokacijama. Mobitel: skeniraj, zaprimi, premjesti i prebroji. Voditelji vide manjkove, otvorene zadatke i greške povezivanja.</p></article>
+      </div>
+      <div class="workflow-actions wrap"><button type="button" class="button button-plum" data-action="workflow-demo"><span data-i18n="workflowTry">Isprobaj tijek robe</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><p class="workflow-status" data-i18n="workflowStatus">Dostupno ovdje: interaktivna simulacija zaliha. U planu: stvarno skeniranje, ERP/POS povezivanje, izdavanje računa i AI podrška.</p></div>
+    </section>
+
     <section class="catalog-section wrap section-space" id="ponuda">
       <div class="section-heading">
         <div><p class="eyebrow" data-i18n="catalogEyebrow">MALI IZBOR. VELIKO VESELJE.</p><h2 data-i18n="catalogTitle">Za svaki mali plan.</h2></div>
@@ -92,8 +144,9 @@
         <div class="filter-chips" id="category-filters" aria-label="Kategorije proizvoda"></div>
         <label class="search-field"><svg class="icon"><use href="#i-search"/></svg><input type="search" id="product-search" placeholder="Što tražiš?" aria-label="Pretraži demo proizvode" autocomplete="off"></label>
       </div>
-      <p class="demo-caption" data-i18n="catalogDemo">DEMO KATALOG · Proizvodi i cijene su primjeri za prikaz iskustva kupnje.</p>
+      <p class="demo-caption" data-i18n="catalogDemo">20 DEMO ARTIKALA · Prijedlozi premium asortimana i OVAMO koncepti. Cijene, pakiranja i zalihe su izmišljeni. Stvarni katalog od 2.000+ artikala još nije uvezen.</p>
       <div class="product-grid" id="product-grid" aria-live="polite"></div>
+      <nav id="catalog-pagination" class="catalog-pagination" aria-label="Stranice demo kataloga"></nav>
       <noscript><p class="empty-state">Za interaktivni demo katalog uključi JavaScript. Ovaj koncept ne prima narudžbe ni uplate.</p></noscript>
       <div class="catalog-bottom"><span data-i18n="catalogBottom">Dobri dani počinju malim stvarima.</span><svg class="icon"><use href="#i-sun"/></svg></div>
     </section>
@@ -134,10 +187,15 @@
       </div>
     </section>
 
-    <section class="operations-teaser wrap">
+    <section class="operations-teaser wrap" id="sustav">
       <div class="operations-symbol"><svg class="icon"><use href="#i-grid"/></svg></div>
-      <div><p class="eyebrow" data-i18n="opsEyebrow">IDEJA IZA TRGOVINE</p><h3 data-i18n="opsTitle">Povezano poslovanje. Više pregleda.</h3><p data-i18n="opsDescription">Zaviri u demonstraciju zaliha, pregleda poslovanja i AI preporuka.</p></div>
+      <div><p class="eyebrow" data-i18n="opsEyebrow">IDEJA IZA TRGOVINE</p><h3 data-i18n="opsTitle">Povezano poslovanje. Više pregleda.</h3><p data-i18n="opsDescription">Isprobaj ulaz, prijenos i izlaz robe te simulaciju računa i korisničke podrške.</p></div>
       <button class="button button-outline" type="button" data-action="operations"><span data-i18n="opsButton">Otvori demo sustava</span><svg class="icon"><use href="#i-up"/></svg></button>
+    </section>
+
+    <section class="app-concepts-teaser wrap">
+      <a class="app-concepts-image" href="./concepts.html"><img src="./assets/concepts/catalog.webp" alt="Vizualni koncept upravljanja katalogom s više od 2.000 artikala" loading="lazy" width="1600" height="900"></a>
+      <div><p class="eyebrow" data-i18n="conceptEyebrow">OVAMO NA SVAKOM EKRANU</p><h2 data-i18n="conceptTitle">2.000+ artikala.<br>Jasan sljedeći korak.</h2><p data-i18n="conceptBody">Koncepti za ured, skladište i rad u trgovini. Brza pretraga, skeniranje, poslovnice i zadaci koji trebaju tvoju odluku.</p><a class="button button-plum" href="./concepts.html"><span data-i18n="conceptButton">Pogledaj koncepte aplikacija</span><svg class="icon"><use href="#i-arrow"/></svg></a><small data-i18n="conceptNote">Vizualni koncepti · ilustrativni podaci · aplikacije su u planu</small></div>
     </section>
   </main>
 

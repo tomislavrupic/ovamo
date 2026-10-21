@@ -71,6 +71,16 @@ const drawings = {
     <path d="M147 34v184" stroke="${plum}" stroke-width="4" opacity=".8"/></g>`,
 };
 
+// Neutral category silhouettes for third-party proposals: no invented packaging,
+// logos, ingredients, or implied OVAMO manufacturing/endorsement.
+const categoryDrawings = {
+  can: `<ellipse cx="110" cy="232" rx="45" ry="8" fill="${plum}" opacity=".08"/><g transform="rotate(-7 110 130)"><rect x="72" y="40" width="76" height="184" rx="16" fill="${cream}" stroke="${plum}" stroke-width="2"/><path d="M73 76h74v109H73Z" fill="#D5C1AC"/><ellipse cx="110" cy="43" rx="32" ry="6" fill="#DDD5CA"/><path d="M102 41h16v4h-16" fill="none" stroke="${plum}" stroke-width="2"/><circle cx="110" cy="131" r="26" fill="${cream}"/><path d="m100 137 10-18 10 18Z" fill="none" stroke="${plum}" stroke-width="2"/></g>`,
+  bottle: `<ellipse cx="110" cy="235" rx="38" ry="7" fill="${plum}" opacity=".08"/><g transform="rotate(6 110 135)"><rect x="96" y="24" width="28" height="21" rx="4" fill="${plum}"/><path d="M96 45h28v29c0 16 24 24 24 43v95q0 17-17 17H89q-17 0-17-17v-95c0-19 24-27 24-43Z" fill="#D0DEDA" stroke="${plum}" stroke-width="2"/><rect x="73" y="119" width="74" height="77" fill="${cream}"/><path d="M89 145h42m-42 12h42m-36 12h30" stroke="#6D8982" stroke-width="3"/><path d="M101 54v24c0 16-21 26-21 42" fill="none" stroke="white" stroke-width="4" opacity=".6"/></g>`,
+  chips: `<ellipse cx="110" cy="232" rx="59" ry="7" fill="${plum}" opacity=".08"/><g transform="rotate(-5 110 130)"><path d="M58 42h104l-7 40 10 139H55L65 82Z" fill="#E9D4A9" stroke="${plum}" stroke-width="2"/><path d="M59 52h102M57 211h107" stroke="${plum}" stroke-width="2" opacity=".3"/><rect x="70" y="94" width="80" height="85" rx="40" fill="${cream}"/><path d="m90 143 20-22 20 22m-40 12h40" fill="none" stroke="#98784B" stroke-width="3"/></g>`,
+  chocolate: `<ellipse cx="110" cy="232" rx="49" ry="8" fill="${plum}" opacity=".08"/><g transform="rotate(9 110 130)"><rect x="64" y="36" width="92" height="188" rx="5" fill="#8E737A" stroke="${plum}" stroke-width="2"/><path d="M65 49h90M65 211h90" stroke="${cream}" opacity=".5"/><rect x="77" y="91" width="66" height="87" rx="32" fill="${cream}"/><path d="M94 117h32v32H94Zm16 0v32m-16-16h32" fill="none" stroke="#72554E" stroke-width="2"/></g>`,
+};
+
 export function productIllustration(product) {
-  return `<svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">${drawings[product.illustration] ?? drawings.giftbox}</svg>`;
+  const art = product.provenance === 'manufacturer' ? categoryDrawings : drawings;
+  return `<svg viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">${art[product.illustration] ?? drawings.giftbox}</svg>`;
 }

@@ -1,12 +1,12 @@
 {
   "name": "ovamo-preview",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "OVAMO retail identity and non-transactional system prototype",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "check": "node --check src/app.js && node --check src/data.js && node --check src/store.js && node --check src/illustrations.js"
+    "check": "node --check src/app.js && node --check src/data.js && node --check src/store.js && node --check src/illustrations.js && node --check src/premium.js && node --check src/stock-demo.js && node --check src/stock-ui.js"
   },
   "engines": { "node": ">=22" }
 }
