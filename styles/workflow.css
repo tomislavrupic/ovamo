@@ -79,6 +79,17 @@
   line-height:1.25;
   letter-spacing:-.5px;
 }
+.workflow-image{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:180px;
+  aspect-ratio:3/2;
+  object-fit:cover;
+  border-radius:10px;
+  background:var(--peach);
+  margin:0 0 19px;
+}
 .workflow-step p{
   margin:0 0 22px;
   color:var(--muted);
@@ -300,10 +311,11 @@
   .workflow-intro{max-width:440px;font-size:12px;margin:0}
   .workflow-steps{grid-template-columns:1fr;gap:13px}
   .workflow-step{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:16px;padding:21px 19px 19px;border-radius:3px 3px 12px 12px}
-  .workflow-number{grid-column:1;grid-row:1 / span 3;width:36px;height:36px;margin:1px 0 0;font-size:12px}
-  .workflow-step h3{grid-column:2;min-height:0;margin-bottom:9px;font-size:20px;line-height:1.25}
-  .workflow-step p{grid-column:2;margin-bottom:0;font-size:12px;line-height:1.8}
-  .workflow-step .workflow-role{grid-column:2;margin-top:14px;padding-top:11px;font-size:9px}
+  .workflow-image{grid-column:1/-1;grid-row:1;max-height:210px;margin-bottom:20px}
+  .workflow-number{grid-column:1;grid-row:2 / span 3;width:36px;height:36px;margin:1px 0 0;font-size:12px}
+  .workflow-step h3{grid-column:2;grid-row:2;min-height:0;margin-bottom:9px;font-size:20px;line-height:1.25}
+  .workflow-step p{grid-column:2;grid-row:3;margin-bottom:0;font-size:12px;line-height:1.8}
+  .workflow-step .workflow-role{grid-column:2;grid-row:4;margin-top:14px;padding-top:11px;font-size:9px}
   .workflow-proof{margin-block:23px;padding:21px 17px 19px;border-radius:12px}
   .workflow-example{margin-bottom:18px}
   .workflow-example h3{font-size:23px;line-height:1.2;letter-spacing:-.6px;margin-bottom:10px}

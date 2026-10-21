@@ -9,6 +9,19 @@ const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 const icon = (name) => `<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
 const repository = 'https://github.com/tomislavrupic/ovamo';
+const pdfDocuments = Object.freeze({
+  guide: {
+    href: './assets/documents/OVAMO-vizualni-identitet.pdf',
+    filename: 'OVAMO-vizualni-identitet.pdf',
+    title: { hr: 'OVAMO — knjiga vizualnog identiteta', en: 'OVAMO — brand guidelines' },
+  },
+  estimate: {
+    href: './assets/documents/OVAMO-procjena-izrade-i-odrzavanja.pdf',
+    filename: 'OVAMO-procjena-izrade-i-odrzavanja.pdf',
+    title: { hr: 'OVAMO — procjena izrade i održavanja', en: 'OVAMO — build and maintenance estimate' },
+  },
+});
+let activePreviewDocument = null;
 let storage;
 try { storage = window.localStorage; } catch { /* The demo also works with storage disabled. */ }
 let language = 'hr';
@@ -49,7 +62,8 @@ const english = {
   heroDescription: 'A little treat for your break. Something refreshing for the road. A memory to take home. Find it all in one little place — ovamo.',
   explore: 'Take a little look',
   findUs: 'Find our places',
-  brandGuideDownload: 'Download visual identity (PDF)',
+  brandGuideDownload: 'Download the brand guidelines (PDF)',
+  brandGuidePreview: 'Preview the visual identity (PDF)',
   heroFootnote: 'From the coast, for your everyday.',
   sticker: 'Hello.<br>Come in.',
   imageCaption: 'Store concept visualisation',
@@ -66,22 +80,37 @@ const english = {
   storyTitle: 'It feels good<br>to have your own place.',
   storyBody: 'A familiar smile. Your favourite little thing. Something new that catches your eye. We imagine OVAMO as part of your day — easy, cheerful and always close by.',
   storyLink: 'Discover where our story begins',
-  identityOfferEyebrow: 'OVAMO / VISUAL IDENTITY',
-  identityOfferTitle: 'A visual identity<br>for your stores.',
-  identityOfferIntro: 'A logo, colours and guidelines that connect your stores, packaging and digital channels. A complete package prepared for Classic Shop d.o.o.',
+  identityOfferEyebrow: 'OVAMO / IDENTITY + WEBSITE',
+  identityOfferTitle: 'Your visual identity.<br>Your project starts here.',
+  identityOfferIntro: 'A logo, colours and guidelines that connect your stores, packaging and digital channels. The initial payment for Classic Shop d.o.o. includes the identity and starts development of the basic website.',
   identityScopeLogo: 'Logo and its variations',
   identityScopePalette: 'Colour palette and typography',
   identityScopeGuide: '18-page brand guidelines',
   identityScopeTemplates: 'Icons and editable templates',
   identityScopeFiles: 'SVG vectors and PNG files',
   identityScopeRefinement: 'One final refinement round',
-  identityGuideNote: '18 pages · in Croatian',
+  identityGuideEyebrow: 'OVAMO / BRAND GUIDELINES',
+  identityGuideNote: '18 pages in Croatian: logo, colour palette, typography and application examples.',
+  identityGuideAction: 'Preview PDF',
+  estimatePreview: 'Preview the build and maintenance estimate (PDF)',
+  estimateNote: 'Website and business system · one-time and monthly costs',
+  identityWebsiteScope: 'The basic website includes an HR/EN presentation site and catalogue. The webshop, B2B, inventory, AI apps and monthly maintenance are scoped separately in the estimate.',
   identityOfferFor: 'OFFER FOR CLASSIC SHOP D.O.O.',
   identityOfferPrice: '€2,000',
-  identityOfferOnce: 'One-time payment · complete identity package',
+  identityOfferOnce: 'Initial payment · identity and development kickoff',
+  identityWebsiteRemaining: 'Remaining balance for the basic HR/EN website and catalogue',
+  identityWebsitePrice: '€2,500',
+  identityProjectTotal: 'Total: identity + basic website',
+  identityProjectPrice: '€4,500',
+  identityProjectStart: 'Payment starts the project and counts toward the total price of your selected package.',
   identityOfferPay: 'Pay with Stripe',
   identityCheckoutNote: 'Opens the Stripe payment page in a new tab.',
-  identityOfferHandover: 'We deliver the final package directly after payment is confirmed and the agreed final refinements are completed.',
+  identityOfferHandover: 'We deliver the identity files directly after payment is confirmed and the agreed final refinements are completed.',
+  pdfPreviewEyebrow: 'DOCUMENT PREVIEW',
+  pdfPreviewTitle: 'PDF document preview',
+  pdfDownload: 'Download PDF',
+  pdfOpenNewTab: 'Open in a new tab',
+  pdfPreviewHelp: 'If the document does not display in your browser, open it in a new tab.',
   storesEyebrow: 'OUR STORY STARTS ON THE COAST.',
   storesTitle: 'See you around town.',
   storesAside: 'Split and Zadar.<br>Our story is just beginning.',
@@ -170,9 +199,11 @@ function translatePage() {
   $('.coastal-map').setAttribute('aria-label', copy('Shematski prikaz Splita i Zadra', 'Illustrative map of Split and Zadar'));
   $('.city-tabs').setAttribute('aria-label', copy('Gradovi', 'Cities'));
   $('.store-photo').alt = copy('Koncept OVAMO trgovine u toplom kamenom ambijentu', 'OVAMO store concept on a warm limestone street');
+  $('#brand-guide-preview').alt = copy('Prikaz OVAMO priručnika i elemenata vizualnog identiteta', 'Mockup of the OVAMO guide and visual identity elements');
   $('.back-top').setAttribute('aria-label', copy('Na vrh', 'Back to top'));
   $('#ops-nav').setAttribute('aria-label', copy('Demo sustava', 'System demo'));
   $$('[data-close]').forEach((button) => button.setAttribute('aria-label', copy('Zatvori', 'Close')));
+  updatePdfPreviewCopy();
   updateMenuLabel();
   renderFilters();
   renderProducts();
@@ -317,6 +348,27 @@ function toast(message) {
   toastTimer = setTimeout(() => $('#toast').classList.remove('visible'), 2600);
 }
 
+function updatePdfPreviewCopy() {
+  const title = activePreviewDocument
+    ? pdfDocuments[activePreviewDocument].title[language]
+    : copy('Pregled PDF dokumenta', 'PDF document preview');
+  $('#pdf-preview-title').textContent = title;
+  $('#pdf-preview-frame').title = title;
+}
+
+function openPdfPreview(key, trigger) {
+  if (!Object.hasOwn(pdfDocuments, key) || typeof $('#pdf-preview-dialog').showModal !== 'function') return false;
+  const pdf = pdfDocuments[key];
+  activePreviewDocument = key;
+  updatePdfPreviewCopy();
+  $('#pdf-preview-download').href = pdf.href;
+  $('#pdf-preview-download').download = pdf.filename;
+  $('#pdf-preview-open').href = pdf.href;
+  $('#pdf-preview-frame').src = `${pdf.href}#view=FitH`;
+  openDialog('pdf-preview-dialog', trigger);
+  return true;
+}
+
 function openDialog(id, trigger) {
   $$('dialog[open]').forEach((dialog) => dialog.close());
   const dialog = document.getElementById(id);
@@ -348,6 +400,11 @@ function closeMenu() {
 }
 
 document.addEventListener('click', (event) => {
+  const previewLink = event.target.closest('a[data-pdf-preview]');
+  if (previewLink && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+    if (openPdfPreview(previewLink.dataset.pdfPreview, previewLink)) event.preventDefault();
+    return;
+  }
   const button = event.target.closest('button');
   if (!button || button.disabled) return;
   const data = button.dataset;
@@ -475,6 +532,10 @@ $('.city-tabs').addEventListener('keydown', (event) => {
 });
 $$('dialog').forEach((dialog) => {
   dialog.addEventListener('close', () => {
+    if (dialog.id === 'pdf-preview-dialog' && !dialog.open) {
+      $('#pdf-preview-frame').removeAttribute('src');
+      activePreviewDocument = null;
+    }
     if (!$$('dialog[open]').length) document.body.classList.remove('dialog-open');
     const trigger = dialogTriggers.get(dialog);
     if (!$$('dialog[open]').length && trigger?.isConnected) trigger.focus({ preventScroll: true });

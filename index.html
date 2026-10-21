@@ -26,15 +26,17 @@
   <meta name="twitter:image:alt" content="OVAMO wordmark, hrvatski slogan i koncept trgovine u mediteranskom ambijentu.">
   <title>ovamo — Male stvari. Dobar dan.</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./styles/main.css?v=20261021-4">
+  <link rel="stylesheet" href="./styles/main.css?v=20261021-6">
   <link rel="stylesheet" href="./styles/stock.css?v=20261021-2">
-  <link rel="stylesheet" href="./styles/workflow.css?v=20261021-2">
-  <script type="module" src="./src/app.js?v=20261021-4"></script>
+  <link rel="stylesheet" href="./styles/workflow.css?v=20261021-6">
+  <script type="module" src="./src/app.js?v=20261021-6"></script>
 </head>
 <body>
   <a href="#main" class="skip-link" data-i18n="skip">Preskoči na sadržaj</a>
   <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M5 17v4h14v-4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
     <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
@@ -86,7 +88,7 @@
         <div class="hero-actions">
           <a class="button button-plum" href="#ponuda"><span data-i18n="explore">Zaviri u ponudu</span><svg class="icon"><use href="#i-arrow"/></svg></a>
           <a class="link-button" href="#trgovine"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="findUs">Pronađi nas</span></a>
-          <a class="link-button" href="./assets/documents/OVAMO-vizualni-identitet.pdf" type="application/pdf" download="OVAMO-vizualni-identitet.pdf"><span data-i18n="brandGuideDownload">Preuzmi vizualni identitet (PDF)</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="button button-outline hero-guide-button" href="./assets/documents/OVAMO-vizualni-identitet.pdf" type="application/pdf" data-pdf-preview="guide" aria-haspopup="dialog" aria-controls="pdf-preview-dialog"><span data-i18n="brandGuidePreview">Pregledaj vizualni identitet (PDF)</span><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></a>
         </div>
         <div class="hero-footnote"><span class="little-line"></span><span data-i18n="heroFootnote">S juga, za svaki tvoj dan.</span></div>
       </div>
@@ -112,10 +114,10 @@
         <p class="workflow-intro" data-i18n="workflowIntro">Jedan šifrarnik za 2.000+ artikala. Svaki prijam, prijenos i prodaja povezani su s istom evidencijom zaliha, uz jasan zadatak za svakog djelatnika.</p>
       </div>
       <ol class="workflow-steps wrap">
-        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">01</span><h3 data-i18n="workflow1Title">Zaprimi i skeniraj</h3><p data-i18n="workflow1Body">Otvori dobavljačevu isporuku, skeniraj barkod i potvrdi kartone, komade i stvarnu količinu. Zabilježi lot, rok trajanja i eventualni manjak.</p><span class="workflow-role" data-i18n="workflow1Role">Skladište · mobitel ili skener</span></li>
-        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">02</span><h3 data-i18n="workflow2Title">Premjesti i prihvati</h3><p data-i18n="workflow2Body">Odaberi trgovinu i otpremi robu. Zaliha ostaje „na putu” dok odredišna trgovina ne potvrdi koliko je robe stvarno primila.</p><span class="workflow-role" data-i18n="workflow2Role">Skladište → trgovina · dvije potvrde</span></li>
-        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">03</span><h3 data-i18n="workflow3Title">Prodaj ili isporuči</h3><p data-i18n="workflow3Body">Potvrđena POS prodaja razdužuje komade u toj trgovini. Web i B2B narudžbe prvo rezerviraju robu; otprema ili preuzimanje bilježi fizički izlaz.</p><span class="workflow-role" data-i18n="workflow3Role">Blagajna · webshop · veleprodaja</span></li>
-        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">04</span><h3 data-i18n="workflow4Title">Izdaj račun i uskladi</h3><p data-i18n="workflow4Body">Dogovoreni poslovni događaj pokreće izdavanje računa kroz povezani ERP ili posrednika. Dokument, fiskalna potvrda i plaćanje prate se zasebno.</p><span class="workflow-role" data-i18n="workflow4Role">Financije · automatizacija i provjera</span></li>
+        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">01</span><img class="workflow-image" src="./assets/workflow-receive.webp" alt="" width="1200" height="800" loading="lazy" decoding="async"><h3 data-i18n="workflow1Title">Zaprimi i skeniraj</h3><p data-i18n="workflow1Body">Otvori dobavljačevu isporuku, skeniraj barkod i potvrdi kartone, komade i stvarnu količinu. Zabilježi lot, rok trajanja i eventualni manjak.</p><span class="workflow-role" data-i18n="workflow1Role">Skladište · mobitel ili skener</span></li>
+        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">02</span><img class="workflow-image" src="./assets/workflow-transfer.webp" alt="" width="1200" height="800" loading="lazy" decoding="async"><h3 data-i18n="workflow2Title">Premjesti i prihvati</h3><p data-i18n="workflow2Body">Odaberi trgovinu i otpremi robu. Zaliha ostaje „na putu” dok odredišna trgovina ne potvrdi koliko je robe stvarno primila.</p><span class="workflow-role" data-i18n="workflow2Role">Skladište → trgovina · dvije potvrde</span></li>
+        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">03</span><img class="workflow-image" src="./assets/workflow-sell.webp" alt="" width="1200" height="800" loading="lazy" decoding="async"><h3 data-i18n="workflow3Title">Prodaj ili isporuči</h3><p data-i18n="workflow3Body">Potvrđena POS prodaja razdužuje komade u toj trgovini. Web i B2B narudžbe prvo rezerviraju robu; otprema ili preuzimanje bilježi fizički izlaz.</p><span class="workflow-role" data-i18n="workflow3Role">Blagajna · webshop · veleprodaja</span></li>
+        <li class="workflow-step"><span class="workflow-number" aria-hidden="true">04</span><img class="workflow-image" src="./assets/workflow-invoice.webp" alt="" width="1200" height="800" loading="lazy" decoding="async"><h3 data-i18n="workflow4Title">Izdaj račun i uskladi</h3><p data-i18n="workflow4Body">Dogovoreni poslovni događaj pokreće izdavanje računa kroz povezani ERP ili posrednika. Dokument, fiskalna potvrda i plaćanje prate se zasebno.</p><span class="workflow-role" data-i18n="workflow4Role">Financije · automatizacija i provjera</span></li>
       </ol>
       <div class="workflow-proof wrap">
         <div class="workflow-example"><h3 data-i18n="workflowExampleTitle">Istih 240 komada, od početka do kraja.</h3><p data-i18n="workflowExampleBody">Ogledni primjer: 10 kartona × 24 komada. Prijenos mijenja lokaciju; nakon prodaje 3 komada u poslovanju ostaje 237.</p></div>
@@ -161,9 +163,9 @@
 
     <section class="identity-offer wrap" id="vizualni-identitet" aria-labelledby="identity-offer-title">
       <div class="identity-offer-copy">
-        <p class="eyebrow" data-i18n="identityOfferEyebrow">OVAMO / VIZUALNI IDENTITET</p>
-        <h2 id="identity-offer-title" data-i18n="identityOfferTitle">Vizualni identitet<br>za vaše trgovine.</h2>
-        <p class="identity-offer-intro" data-i18n="identityOfferIntro">Logo, boje i pravila koja povezuju trgovine, ambalažu i digitalne kanale. Cjelovit paket pripremljen za Classic Shop d.o.o.</p>
+        <p class="eyebrow" data-i18n="identityOfferEyebrow">OVAMO / IDENTITET + WEB</p>
+        <h2 id="identity-offer-title" data-i18n="identityOfferTitle">Vizualni identitet<br>i početak razvoja.</h2>
+        <p class="identity-offer-intro" data-i18n="identityOfferIntro">Logo, boje i pravila koja povezuju trgovine, ambalažu i digitalne kanale. Početna uplata za Classic Shop d.o.o. uključuje identitet i pokreće izradu osnovne web-stranice.</p>
         <ul class="identity-offer-scope">
           <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="identityScopeLogo">Logotip i njegove varijante</span></li>
           <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="identityScopePalette">Paleta boja i tipografija</span></li>
@@ -172,16 +174,38 @@
           <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="identityScopeFiles">SVG vektori i PNG datoteke</span></li>
           <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="identityScopeRefinement">Jedan krug završnih dorada</span></li>
         </ul>
-        <a class="link-button identity-offer-download" href="./assets/documents/OVAMO-vizualni-identitet.pdf" type="application/pdf" download="OVAMO-vizualni-identitet.pdf"><span data-i18n="brandGuideDownload">Preuzmi vizualni identitet (PDF)</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <p class="identity-offer-document-note" data-i18n="identityGuideNote">18 stranica · na hrvatskom jeziku</p>
+        <div class="identity-offer-documents">
+          <div class="identity-offer-document">
+            <a class="identity-guide-card" href="./assets/documents/OVAMO-vizualni-identitet.pdf" type="application/pdf" data-pdf-preview="guide" aria-haspopup="dialog" aria-controls="pdf-preview-dialog" aria-labelledby="identity-guide-title" aria-describedby="identity-guide-note">
+              <div class="identity-guide-media"><img id="brand-guide-preview" src="./assets/ovamo-brand-guide-preview.webp" alt="Prikaz OVAMO priručnika i elemenata vizualnog identiteta" width="1536" height="1024" loading="lazy" decoding="async"></div>
+              <div class="identity-guide-content">
+                <p class="identity-guide-eyebrow" data-i18n="identityGuideEyebrow">OVAMO / KNJIGA STANDARDA</p>
+                <h3 class="identity-guide-title" id="identity-guide-title" data-i18n="brandGuidePreview">Pregledaj vizualni identitet (PDF)</h3>
+                <p class="identity-guide-note" id="identity-guide-note" data-i18n="identityGuideNote">18 stranica na hrvatskom: logotip, paleta boja, tipografija i primjeri primjene.</p>
+                <span class="identity-guide-action" aria-hidden="true"><span data-i18n="identityGuideAction">Pregledaj PDF</span><svg class="icon"><use href="#i-eye"/></svg></span>
+              </div>
+            </a>
+            <a class="link-button identity-guide-download-link" href="./assets/documents/OVAMO-vizualni-identitet.pdf" type="application/pdf" download="OVAMO-vizualni-identitet.pdf"><span data-i18n="brandGuideDownload">Preuzmi knjigu vizualnog identiteta (PDF)</span><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
+          </div>
+          <div class="identity-offer-document">
+            <a class="link-button identity-offer-download" href="./assets/documents/OVAMO-procjena-izrade-i-odrzavanja.pdf" type="application/pdf" data-pdf-preview="estimate" aria-haspopup="dialog" aria-controls="pdf-preview-dialog" aria-describedby="identity-estimate-note"><span data-i18n="estimatePreview">Pregledaj procjenu izrade i održavanja (PDF)</span><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></a>
+            <p class="identity-offer-document-note" id="identity-estimate-note" data-i18n="estimateNote">Web i poslovni sustav · jednokratni i mjesečni troškovi</p>
+          </div>
+        </div>
+        <p class="identity-offer-scope-note" data-i18n="identityWebsiteScope">Osnovni web uključuje HR/EN prezentacijsku stranicu i katalog. Webshop, B2B, zalihe, AI aplikacije i mjesečno održavanje ugovaraju se zasebno prema procjeni.</p>
       </div>
       <aside class="identity-offer-card" aria-labelledby="identity-offer-card-title">
         <p class="eyebrow" id="identity-offer-card-title" data-i18n="identityOfferFor">PONUDA ZA CLASSIC SHOP D.O.O.</p>
         <p class="identity-offer-price" data-i18n="identityOfferPrice">2.000 €</p>
-        <p class="identity-offer-price-note" data-i18n="identityOfferOnce">Jednokratno · cijeli paket identiteta</p>
+        <p class="identity-offer-price-note" data-i18n="identityOfferOnce">Početna uplata · identitet i početak razvoja</p>
+        <dl class="identity-offer-breakdown">
+          <div><dt data-i18n="identityWebsiteRemaining">Preostalo za osnovni HR/EN web i katalog</dt><dd data-i18n="identityWebsitePrice">2.500 €</dd></div>
+          <div class="identity-offer-total"><dt data-i18n="identityProjectTotal">Ukupno: identitet + osnovni web</dt><dd data-i18n="identityProjectPrice">4.500 €</dd></div>
+        </dl>
+        <p class="identity-offer-start" data-i18n="identityProjectStart">Uplata pokreće projekt i uračunava se u ukupnu cijenu odabranog paketa.</p>
         <a class="button button-coral" href="https://buy.stripe.com/eVqdR92MY9wGh1ufAW0VO00" target="_blank" rel="noopener noreferrer" aria-describedby="identity-checkout-note"><span data-i18n="identityOfferPay">Plati putem Stripea</span><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></a>
         <p class="identity-offer-checkout-note" id="identity-checkout-note" data-i18n="identityCheckoutNote">Otvara Stripeovu stranicu za plaćanje u novoj kartici.</p>
-        <p class="identity-offer-handover" data-i18n="identityOfferHandover">Završni paket predajemo izravno, nakon potvrđene uplate i dogovorenih završnih dorada.</p>
+        <p class="identity-offer-handover" data-i18n="identityOfferHandover">Nakon potvrđene uplate i dogovorenih završnih dorada, datoteke identiteta predajemo izravno.</p>
       </aside>
     </section>
 
@@ -234,6 +258,19 @@
       <p class="footer-disclaimer" data-i18n="footerDisclaimer">Katalog, zalihe i aplikacije koriste ogledne podatke. Demo katalog ne prima narudžbe. Vizualni identitet plaća se zasebno na Stripeu.</p>
     </div>
   </footer>
+
+  <dialog id="pdf-preview-dialog" class="pdf-preview-dialog" aria-labelledby="pdf-preview-title" aria-describedby="pdf-preview-help">
+    <div class="dialog-header">
+      <div><span class="eyebrow" data-i18n="pdfPreviewEyebrow">PREGLED DOKUMENTA</span><h2 id="pdf-preview-title" data-i18n="pdfPreviewTitle">Pregled PDF dokumenta</h2></div>
+      <button class="icon-button" type="button" data-close="pdf-preview-dialog" aria-label="Zatvori" autofocus><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="pdf-preview-toolbar">
+      <a id="pdf-preview-download" class="button button-plum" href="./assets/documents/OVAMO-vizualni-identitet.pdf" download="OVAMO-vizualni-identitet.pdf"><span data-i18n="pdfDownload">Preuzmi PDF</span><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
+      <a id="pdf-preview-open" class="link-button" href="./assets/documents/OVAMO-vizualni-identitet.pdf" target="_blank" rel="noopener noreferrer"><span data-i18n="pdfOpenNewTab">Otvori u novoj kartici</span><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></a>
+    </div>
+    <p class="pdf-preview-help" id="pdf-preview-help" data-i18n="pdfPreviewHelp">Ako se dokument ne prikazuje u vašem pregledniku, otvorite ga u novoj kartici.</p>
+    <iframe id="pdf-preview-frame" class="pdf-preview-frame" title="Pregled PDF dokumenta"></iframe>
+  </dialog>
 
   <dialog id="cart-dialog" class="drawer-dialog" aria-labelledby="cart-title">
     <div class="dialog-header"><div><span class="eyebrow">OVAMO / DEMO</span><h2 id="cart-title" data-i18n="cartTitle">Tvoj mali izbor.</h2></div><button class="icon-button" type="button" data-close="cart-dialog" aria-label="Zatvori"><svg class="icon"><use href="#i-close"/></svg></button></div>
