@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <title>OVAMO</title>
+  <rect width="128" height="128" rx="28" fill="#FFF5E7"/>
+  <defs>
+    <mask id="ovamo-icon-space" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="132">
+      <rect width="120" height="132" fill="white"/>
+      <circle cx="60" cy="64" r="25" fill="black"/>
+    </mask>
+  </defs>
+  <g transform="translate(10 5) scale(.9)" mask="url(#ovamo-icon-space)">
+    <path fill="#F47850" d="M20 20 58 4C65 1 70 5 70 13V72C70 80 65 88 58 91L20 107C12 110 6 105 6 96V42C6 31 11 24 20 20Z"/>
+    <path fill="#342638" d="M62 29 97 14C105 11 112 17 112 27V81C112 93 108 99 98 104L62 119C54 123 48 118 48 109V55C48 42 53 34 62 29Z"/>
+  </g>
+</svg>

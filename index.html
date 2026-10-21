@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FFF5E7">
+  <meta name="description" content="OVAMO — mjesto za male stvari koje čine dobar dan. Istražite koncept trgovina, poklona i povezanog poslovanja.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ovamo — Male stvari. Dobar dan.</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles/main.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link" data-i18n="skip">Preskoči na sadržaj</a>
+  <svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m3 7 9-5 9 5v10l-9 5-9-5V7Zm0 0 9 5 9-5M12 12v10M7.5 4.5l9 5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></symbol>
+  </svg>
+
+  <div class="preview-bar">
+    <div class="wrap preview-inner">
+      <span><span class="status-dot"></span><span data-i18n="previewBar">OVAMO — interaktivni koncept. Kupnja još nije dostupna.</span></span>
+      <button type="button" class="text-button" data-action="project"><span data-i18n="aboutPreview">O projektu</span><svg class="icon"><use href="#i-up"/></svg></button>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="wrap nav-wrap">
+      <a href="#main" class="brand" aria-label="ovamo — naslovnica">
+        <img src="./assets/favicon.svg" alt="" width="40" height="40">
+        <span>ovamo</span>
+      </a>
+      <nav class="primary-nav" id="primary-nav" aria-label="Glavna navigacija">
+        <a href="#ponuda" data-i18n="navShop">Istraži ponudu</a>
+        <a href="#trgovine" data-i18n="navStores">Naše trgovine</a>
+        <a href="#partneri" data-i18n="navPartners">Za partnere</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="language-button" type="button" id="language-toggle" aria-label="Switch to English"><span id="language-current">HR</span><span class="language-slash">/</span><span id="language-next">EN</span></button>
+        <button class="cart-trigger" type="button" data-action="cart" aria-label="Otvori demo košaricu"><svg class="icon"><use href="#i-bag"/></svg><span class="cart-count" id="cart-count">0</span></button>
+        <button class="menu-toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Otvori izbornik"><svg class="icon"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="tiny-flower">✳</span><span data-i18n="heroEyebrow">TVOJE MALO DOBRO MJESTO</span></div>
+        <h1><span data-i18n="heroTitle1">Male stvari.</span><span class="accent" data-i18n="heroTitle2">Dobar dan.</span></h1>
+        <p class="hero-description" data-i18n="heroDescription">Nešto fino za pauzu. Osvježenje za put. Uspomena koju nosiš sa sobom. Sve stane u jedan mali — ovamo.</p>
+        <div class="hero-actions">
+          <a class="button button-plum" href="#ponuda"><span data-i18n="explore">Zaviri u ponudu</span><svg class="icon"><use href="#i-arrow"/></svg></a>
+          <a class="link-button" href="#trgovine"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="findUs">Pronađi nas</span></a>
+        </div>
+        <div class="hero-footnote"><span class="little-line"></span><span data-i18n="heroFootnote">S juga, za svaki tvoj dan.</span></div>
+      </div>
+      <div class="hero-visual">
+        <div class="image-frame"><img class="store-photo" src="./assets/ovamo-store.webp" alt="Koncept OVAMO trgovine u toplom kamenom ambijentu" width="1200" height="900" fetchpriority="high"></div>
+        <div class="hero-sticker"><svg class="icon"><use href="#i-sun"/></svg><span data-i18n="sticker">Tu smo.<br>Navrati.</span><span class="sticker-dot">↗</span></div>
+        <div class="image-caption"><span data-i18n="imageCaption">Vizualizacija koncepta trgovine</span><span>01 / OVAMO</span></div>
+      </div>
+    </section>
+
+    <div class="category-ribbon">
+      <div class="wrap category-ribbon-inner">
+        <button type="button" data-category-jump="drinks"><svg class="ribbon-icon" viewBox="0 0 40 40" aria-hidden="true"><path d="M13 7h14l-1 28H14L13 7Zm0 6h14M20 7V2h8"/></svg><span data-i18n="ribbonDrinks">Za osvježenje.</span></button>
+        <button type="button" data-category-jump="snacks"><svg class="ribbon-icon" viewBox="0 0 40 40" aria-hidden="true"><path d="m10 6 4 2 4-2 4 2 4-2 4 2-2 26-4-2-4 2-4-2-4 2L10 6Z"/><circle cx="20" cy="20" r="6"/></svg><span data-i18n="ribbonSnacks">Za mali gušt.</span></button>
+        <button type="button" data-category-jump="souvenirs"><svg class="ribbon-icon" viewBox="0 0 40 40" aria-hidden="true"><rect x="6" y="9" width="28" height="23" rx="2"/><path d="m9 28 8-9 6 6 5-5 4 8"/><circle cx="26" cy="15" r="2"/></svg><span data-i18n="ribbonSouvenirs">Za uspomenu.</span></button>
+        <button type="button" data-category-jump="gifts"><svg class="ribbon-icon" viewBox="0 0 40 40" aria-hidden="true"><path d="M7 18h26v16H7V18ZM5 12h30v6H5V12Zm15 0v22"/><path d="M20 12C8 14 7 2 14 4c4 1 6 8 6 8Zm0 0c12 2 13-10 6-8-4 1-6 8-6 8Z"/></svg><span data-i18n="ribbonGifts">Za nekog dragog.</span></button>
+      </div>
+    </div>
+
+    <section class="catalog-section wrap section-space" id="ponuda">
+      <div class="section-heading">
+        <div><p class="eyebrow" data-i18n="catalogEyebrow">MALI IZBOR. VELIKO VESELJE.</p><h2 data-i18n="catalogTitle">Za svaki mali plan.</h2></div>
+        <p class="section-aside" data-i18n="catalogAside">Šetnja rivom, pauza na poslu<br>ili poklon bez posebnog razloga.</p>
+      </div>
+      <div class="catalog-controls">
+        <div class="filter-chips" id="category-filters" aria-label="Kategorije proizvoda"></div>
+        <label class="search-field"><svg class="icon"><use href="#i-search"/></svg><input type="search" id="product-search" placeholder="Što tražiš?" aria-label="Pretraži demo proizvode" autocomplete="off"></label>
+      </div>
+      <p class="demo-caption" data-i18n="catalogDemo">DEMO KATALOG · Proizvodi i cijene su primjeri za prikaz iskustva kupnje.</p>
+      <div class="product-grid" id="product-grid" aria-live="polite"></div>
+      <noscript><p class="empty-state">Za interaktivni demo katalog uključi JavaScript. Ovaj koncept ne prima narudžbe ni uplate.</p></noscript>
+      <div class="catalog-bottom"><span data-i18n="catalogBottom">Dobri dani počinju malim stvarima.</span><svg class="icon"><use href="#i-sun"/></svg></div>
+    </section>
+
+    <section class="brand-story">
+      <div class="wrap story-grid">
+        <div class="story-art" aria-hidden="true"><img src="./assets/favicon.svg" alt=""><span class="story-art-note">o, dobar dan.</span><span class="story-ring"></span></div>
+        <div class="story-copy"><p class="eyebrow" data-i18n="storyEyebrow">NEŠTO NAŠE, OTVORENO SVIMA.</p><h2 data-i18n="storyTitle">Baš je dobro<br>imati svoje mjesto.</h2><p data-i18n="storyBody">Poznat osmijeh. Tvoja omiljena sitnica. Nešto novo što ti privuče pogled. OVAMO zamišljamo kao dio tvog dana — jednostavan, vedar i uvijek blizu.</p><a href="#trgovine" class="link-button"><span data-i18n="storyLink">Upoznaj mjesta naše priče</span><svg class="icon"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </section>
+
+    <section class="stores-section wrap section-space" id="trgovine">
+      <div class="section-heading"><div><p class="eyebrow" data-i18n="storesEyebrow">POČELI SMO S JUGA.</p><h2 data-i18n="storesTitle">Vidimo se u gradu.</h2></div><p class="section-aside" data-i18n="storesAside">Split i Zadar.<br>Naša priča tek se širi.</p></div>
+      <div class="stores-grid">
+        <div class="coastal-map" aria-label="Shematski prikaz Splita i Zadra">
+          <div class="map-label" data-i18n="mapLabel">MALA MJESTA, DOBRI SUSRETI.</div>
+          <svg viewBox="0 0 620 390" class="coastline" aria-hidden="true"><path class="land" d="M150-20c-6 70 37 64 56 118s65 54 83 84 6 24 42 45 60 28 74 67 44 41 85 100H680V-20Z"/><path class="shore" d="M150-20c-6 70 37 64 56 118s65 54 83 84 6 24 42 45 60 28 74 67 44 41 85 100"/><path class="island" d="m190 167 40 44m19 35 51 28m20 45 55 24m-108-120 28 30"/></svg>
+          <span class="sea-name">JADRAN</span>
+          <button class="map-pin pin-zadar" data-city="zadar"><span class="map-pin-dot"></span>Zadar</button>
+          <button class="map-pin pin-split active" data-city="split"><span class="map-pin-dot"></span>Split</button>
+          <span class="map-note" data-i18n="mapNote">Ilustracija regije, nije navigacijska karta.</span>
+        </div>
+        <div class="city-details">
+          <div class="city-tabs" role="tablist" aria-label="Gradovi"><button type="button" id="city-tab-split" role="tab" aria-controls="city-detail" aria-selected="true" data-city="split">Split</button><button type="button" id="city-tab-zadar" role="tab" aria-controls="city-detail" aria-selected="false" data-city="zadar">Zadar</button></div>
+          <div id="city-detail" role="tabpanel" aria-labelledby="city-tab-split" tabindex="0"></div>
+          <div class="location-notice"><svg class="icon"><use href="#i-pin"/></svg><p data-i18n="locationNotice">Ovdje će biti točne adrese, radno vrijeme i ponuda svake poslovnice. Podaci čekaju potvrdu tvrtke.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="partner-section" id="partneri">
+      <div class="wrap partner-grid">
+        <div class="partner-copy"><p class="eyebrow" data-i18n="partnerEyebrow">ZA ONE KOJI STVARAJU DOBRE DANE.</p><h2 data-i18n="partnerTitle">Dobar partner.<br>Svaki dan.</h2><p data-i18n="partnerBody">Za trgovine, suvenirnice i domaćine. Zamišljamo jednostavniju veleprodaju: pregledan izbor, tvoja pakiranja i ponovljena narudžba u nekoliko koraka.</p><button class="button button-coral" type="button" data-action="wholesale"><span data-i18n="partnerButton">Isprobaj B2B koncept</span><svg class="icon"><use href="#i-arrow"/></svg></button><span class="partner-note" data-i18n="partnerNote">Demonstracija. Bez registracije i slanja narudžbe.</span></div>
+        <div class="partner-preview" aria-hidden="true">
+          <div class="partner-preview-header"><span class="mini-brand">ovamo <small>partner</small></span><span class="partner-status">DEMO</span></div>
+          <div class="partner-preview-body"><div class="partner-illustration"><svg viewBox="0 0 200 140"><path d="m25 50 75-33 75 33-75 36Z" fill="#F8A885"/><path d="M25 50v60l75 25V86Z" fill="#F47850"/><path d="M100 86v49l75-25V50Z" fill="#D95D3E"/><path d="m64 33 75 34v24l-27 12V79L38 44Z" fill="#FFF5E7"/><path d="m44 76 28 11v14L44 90Z" fill="#342638"/></svg></div><div class="preview-line"><span data-i18n="previewPack">Tvoja pakiranja</span><strong>12 × 250 ml</strong></div><div class="preview-line"><span data-i18n="previewStock">Pregled zaliha</span><span class="stock-pill" data-i18n="previewAvailable">Sve na jednom mjestu</span></div><div class="preview-mini-button"><span data-i18n="previewRepeat">Ponovi svoj izbor</span><svg class="icon"><use href="#i-arrow"/></svg></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="operations-teaser wrap">
+      <div class="operations-symbol"><svg class="icon"><use href="#i-grid"/></svg></div>
+      <div><p class="eyebrow" data-i18n="opsEyebrow">IDEJA IZA TRGOVINE</p><h3 data-i18n="opsTitle">Povezano poslovanje. Više pregleda.</h3><p data-i18n="opsDescription">Zaviri u demonstraciju zaliha, pregleda poslovanja i AI preporuka.</p></div>
+      <button class="button button-outline" type="button" data-action="operations"><span data-i18n="opsButton">Otvori demo sustava</span><svg class="icon"><use href="#i-up"/></svg></button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top"><span class="footer-message" data-i18n="footerMessage">Kad god ti zatreba nešto malo.</span><a href="#main" class="back-top" aria-label="Na vrh"><svg class="icon"><use href="#i-up"/></svg></a></div>
+      <div class="footer-wordmark">ovamo<span>↗</span></div>
+      <div class="footer-bottom"><span data-i18n="footerCredit">Koncept brenda za Classic Shop · 2026.</span><div><button class="text-button" type="button" data-action="project" data-i18n="aboutPreview">O projektu</button><a href="https://github.com/tomislavrupic/ovamo" target="_blank" rel="noopener noreferrer">GitHub ↗</a><button class="text-button" type="button" data-action="reset" data-i18n="resetDemo">Resetiraj demo</button></div></div>
+      <p class="footer-disclaimer" data-i18n="footerDisclaimer">Interaktivni dizajnerski prototip. Ilustrativni proizvodi i podaci. Aplikacija ne prima stvarne narudžbe, uplate ni osobne podatke.</p>
+    </div>
+  </footer>
+
+  <dialog id="cart-dialog" class="drawer-dialog" aria-labelledby="cart-title">
+    <div class="dialog-header"><div><span class="eyebrow">OVAMO / DEMO</span><h2 id="cart-title" data-i18n="cartTitle">Tvoj mali izbor.</h2></div><button class="icon-button" type="button" data-close="cart-dialog" aria-label="Zatvori"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <div id="cart-content"></div>
+  </dialog>
+
+  <dialog id="wholesale-dialog" class="wide-dialog" aria-labelledby="wholesale-title">
+    <div class="dialog-header"><div><span class="eyebrow">OVAMO PARTNER / DEMO</span><h2 id="wholesale-title" data-i18n="wholesaleTitle">Tvoja sljedeća dopuna.</h2></div><button class="icon-button" type="button" data-close="wholesale-dialog" aria-label="Zatvori"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <p class="dialog-description" data-i18n="wholesaleDescription">Isprobaj izbor punih pakiranja i pregled demo ponude. Cijene su ilustrativne, nisu komercijalna ponuda. Ništa se ne šalje.</p>
+    <div id="wholesale-content"></div>
+  </dialog>
+
+  <dialog id="operations-dialog" class="operations-dialog" aria-labelledby="operations-title">
+    <div class="dialog-header"><div class="ops-dialog-brand"><img src="./assets/favicon.svg" alt="" width="30" height="30"><h2 id="operations-title">ovamo <span data-i18n="operationsHeading">pregled</span></h2></div><div class="ops-header-right"><span class="demo-label" data-i18n="publicDemo">JAVNI DEMO · OGLEDNI PODACI</span><button class="icon-button" type="button" data-close="operations-dialog" aria-label="Zatvori"><svg class="icon"><use href="#i-close"/></svg></button></div></div>
+    <div class="operations-shell"><nav class="ops-nav" id="ops-nav" aria-label="Demo sustava"></nav><div class="ops-content" id="ops-content"></div></div>
+  </dialog>
+
+  <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-title">
+    <div class="dialog-header"><div><span class="eyebrow">OVAMO / 01</span><h2 id="project-title" data-i18n="projectTitle">Ideja koja dobiva oblik.</h2></div><button class="icon-button" type="button" data-close="project-dialog" aria-label="Zatvori"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <div id="project-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

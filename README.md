@@ -45,4 +45,3 @@ GitHub Pages is intended here only for the project presentation and non-transact
 OVAMO is a working brand concept, not a cleared trademark. An existing Belgian food business uses the name. Trademark, domain and social-handle checks are required before commercial adoption. Storefront images are generated concept visualizations, not photographs of confirmed company premises. Actual store addresses, opening hours, product records and business contacts must be supplied and approved before launch.
 
 No secrets, customer data or real operational data belong in the public repository. A browser-side screen or password is not access control.
-
