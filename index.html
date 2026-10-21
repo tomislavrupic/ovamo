@@ -26,10 +26,13 @@
   <meta name="twitter:image:alt" content="OVAMO wordmark, hrvatski slogan i koncept trgovine u mediteranskom ambijentu.">
   <title>ovamo — Male stvari. Dobar dan.</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./styles/main.css?v=20261021-6">
+  <link rel="stylesheet" href="./styles/main.css?v=20261021-8">
   <link rel="stylesheet" href="./styles/stock.css?v=20261021-2">
   <link rel="stylesheet" href="./styles/workflow.css?v=20261021-6">
-  <script type="module" src="./src/app.js?v=20261021-6"></script>
+  <link rel="stylesheet" href="./styles/products.css?v=20261021-8">
+  <link rel="stylesheet" href="./styles/motion.css?v=20261021-1">
+  <script type="module" src="./src/app.js?v=20261021-8"></script>
+  <script type="module" src="./src/motion.js?v=20261021-1"></script>
 </head>
 <body>
   <a href="#main" class="skip-link" data-i18n="skip">Preskoči na sadržaj</a>
@@ -50,6 +53,7 @@
     <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
     <symbol id="i-box" viewBox="0 0 24 24"><path d="m3 7 9-5 9 5v10l-9 5-9-5V7Zm0 0 9 5 9-5M12 12v10M7.5 4.5l9 5"/></symbol>
     <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></symbol>
   </svg>
 
   <div class="preview-bar">
@@ -70,6 +74,7 @@
         <a href="#partneri" data-i18n="navPartners">Za partnere</a>
         <a href="#kako-radi" data-i18n="navWorkflow">Kako radi</a>
         <a href="./concepts.html" data-i18n="navConcepts">Aplikacije</a>
+        <a href="./ai.html" data-i18n="navAi">OVAMO AI</a>
       </nav>
       <div class="nav-actions">
         <button class="language-button" type="button" id="language-toggle" aria-label="Switch to English"><span id="language-current">HR</span><span class="language-slash">/</span><span id="language-next">EN</span></button>
@@ -138,6 +143,24 @@
       <div class="workflow-actions wrap"><button type="button" class="button button-plum" data-action="workflow-demo"><span data-i18n="workflowTry">Isprobaj tijek robe</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button><p class="workflow-status" data-i18n="workflowStatus">Dostupno ovdje: interaktivna simulacija zaliha. U planu: stvarno skeniranje, ERP/POS povezivanje, izdavanje računa i AI podrška.</p></div>
     </section>
 
+    <section class="ai-assistant-teaser wrap" aria-labelledby="ai-teaser-title">
+      <div class="ai-teaser-copy">
+        <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg><span data-i18n="aiTeaserEyebrow">OVAMO AI / PLANIRANI ASISTENT</span></p>
+        <h2 id="ai-teaser-title" data-i18n="aiTeaserTitle">Poslovanje,<br>u jednom razgovoru.</h2>
+        <p data-i18n="aiTeaserBody">Prodaja, zalihe, nabava i marže — uz pristup prema ulozi zaposlenika nakon prijave. Planirano povezivanje s Claudeom ili ChatGPT-om putem MCP-a.</p>
+        <a class="button button-coral" href="./ai.html"><span data-i18n="aiTeaserButton">Istraži OVAMO AI</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <small data-i18n="aiTeaserNote">Prikaz mogućnosti · ogledni podaci · povezivanje je planirano.</small>
+      </div>
+      <div class="ai-teaser-questions">
+        <p class="ai-teaser-question-label" data-i18n="aiTeaserQuestions">PITANJA IZ STVARNOG RADNOG DANA</p>
+        <ul>
+          <li><span aria-hidden="true">↗</span><span data-i18n="aiTeaserQuestion1">Što trebamo naručiti za Zadar?</span></li>
+          <li><span aria-hidden="true">↗</span><span data-i18n="aiTeaserQuestion2">Koji artikli imaju najbolju maržu?</span></li>
+          <li><span aria-hidden="true">↗</span><span data-i18n="aiTeaserQuestion3">Što danas treba moju potvrdu?</span></li>
+        </ul>
+      </div>
+    </section>
+
     <section class="catalog-section wrap section-space" id="ponuda">
       <div class="section-heading">
         <div><p class="eyebrow" data-i18n="catalogEyebrow">MALI IZBOR. VELIKO VESELJE.</p><h2 data-i18n="catalogTitle">Za svaki mali plan.</h2></div>
@@ -148,6 +171,10 @@
         <label class="search-field"><svg class="icon"><use href="#i-search"/></svg><input type="search" id="product-search" placeholder="Što tražiš?" aria-label="Pretraži demo proizvode" autocomplete="off"></label>
       </div>
       <p class="demo-caption" data-i18n="catalogDemo">20 DEMO ARTIKALA · Prijedlozi premium asortimana i OVAMO koncepti. Cijene, pakiranja i zalihe su izmišljeni. Stvarni katalog od 2.000+ artikala još nije uvezen.</p>
+      <div class="catalog-tools">
+        <p data-i18n="catalogDetailsHint">Otvori proizvod za fotografije, detalje i svoj demo izbor.</p>
+        <button type="button" class="favourites-filter" id="favourites-filter" data-action="favourites" aria-pressed="false" aria-controls="product-grid"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg><span id="favourites-filter-label">Favoriti</span><span class="favourites-count" id="favourites-count">0</span></button>
+      </div>
       <div class="product-grid" id="product-grid" aria-live="polite"></div>
       <nav id="catalog-pagination" class="catalog-pagination" aria-label="Stranice demo kataloga"></nav>
       <noscript><p class="empty-state">Za interaktivni demo katalog uključi JavaScript. Demo katalog ne prima narudžbe ni uplate.</p></noscript>
@@ -270,6 +297,11 @@
     </div>
     <p class="pdf-preview-help" id="pdf-preview-help" data-i18n="pdfPreviewHelp">Ako se dokument ne prikazuje u vašem pregledniku, otvorite ga u novoj kartici.</p>
     <iframe id="pdf-preview-frame" class="pdf-preview-frame" title="Pregled PDF dokumenta"></iframe>
+  </dialog>
+
+  <dialog id="product-dialog" class="product-detail-dialog" aria-labelledby="product-detail-title" aria-describedby="product-detail-notice">
+    <div class="product-dialog-top"><span class="eyebrow" data-i18n="productDetailEyebrow">OVAMO / PREGLED PROIZVODA</span><button class="icon-button" type="button" data-close="product-dialog" aria-label="Zatvori"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <div id="product-detail-content"><h2 id="product-detail-title">Detalji proizvoda</h2><p id="product-detail-notice">Demo katalog.</p></div>
   </dialog>
 
   <dialog id="cart-dialog" class="drawer-dialog" aria-labelledby="cart-title">

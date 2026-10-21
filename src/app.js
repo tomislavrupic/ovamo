@@ -1,8 +1,8 @@
 import { products, categories, stores, demoNotice } from './data.js?v=20261021-2';
 import { addToCart, setQuantity, cartSummary, filterProducts, loadCart, saveCart, formatMoney } from './store.js?v=20261021-2';
-import { productIllustration } from './illustrations.js?v=20261021-2';
 import { createStockDemo, applyStockEvent } from './stock-demo.js?v=20261021-2';
 import { stockSteps, renderStockPanel, renderSupportPanel } from './stock-ui.js?v=20261021-2';
+import { FAVOURITES_KEY, loadFavourites, saveFavourites, toggleFavourite, remainingProductQuantity, mediaForProduct, productPicture, favouriteButton, renderProductDetails } from './product-details.js?v=20261021-8';
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
@@ -27,6 +27,11 @@ try { storage = window.localStorage; } catch { /* The demo also works with stora
 let language = 'hr';
 try { if (storage?.getItem('ovamo-language') === 'en') language = 'en'; } catch { /* Use Croatian. */ }
 let cart = loadCart(storage);
+let favourites = loadFavourites(storage, products);
+let favouritesOnly = false;
+let activeProductId = null;
+let productImageIndex = 0;
+let productQuantity = 1;
 let wholesaleCart = [];
 let category = 'all';
 let searchQuery = '';
@@ -55,6 +60,7 @@ const english = {
   navStores: 'Our places',
   navPartners: 'For partners',
   navConcepts: 'Apps',
+  navAi: 'OVAMO AI',
   navWorkflow: 'How it works',
   heroEyebrow: 'YOUR LITTLE HAPPY PLACE',
   heroTitle1: 'Little things.',
@@ -75,6 +81,8 @@ const english = {
   catalogTitle: 'For your everyday plans.',
   catalogAside: 'A walk by the sea, a break at work<br>or a gift for no particular reason.',
   catalogDemo: '20 DEMO ITEMS · Premium assortment proposals and OVAMO concepts. Prices, case packs and stock are fictional. The real 2,000+ item catalogue has not been imported.',
+  catalogDetailsHint: 'Open a product for photographs, details and your demo selection.',
+  productDetailEyebrow: 'OVAMO / PRODUCT PREVIEW',
   catalogBottom: 'Good days start with little things.',
   storyEyebrow: 'ROOTED HERE. OPEN TO EVERYONE.',
   storyTitle: 'It feels good<br>to have your own place.',
@@ -130,6 +138,15 @@ const english = {
   opsTitle: 'A connected business. A clearer view.',
   opsDescription: 'Try receiving, transferring and selling stock, plus invoice and customer-support simulations.',
   opsButton: 'Open the system demo',
+  aiTeaserEyebrow: 'OVAMO AI / PLANNED ASSISTANT',
+  aiTeaserTitle: 'Your business,<br>in one conversation.',
+  aiTeaserBody: 'Sales, inventory, purchasing and margins — with access based on each employee’s role after sign-in. Planned connections to Claude or ChatGPT through MCP.',
+  aiTeaserButton: 'Explore OVAMO AI',
+  aiTeaserNote: 'Capability preview · sample data · connection is planned.',
+  aiTeaserQuestions: 'QUESTIONS FROM A WORKING DAY',
+  aiTeaserQuestion1: 'What should we order for Zadar?',
+  aiTeaserQuestion2: 'Which products have the best margins?',
+  aiTeaserQuestion3: 'What needs my approval today?',
   conceptEyebrow: 'OVAMO ON EVERY SCREEN',
   conceptTitle: '2,000+ articles.<br>A clear next step.',
   conceptBody: 'Concepts for the office, warehouse and shop floor. Fast search, scanning, locations and tasks that need your decision.',
@@ -212,6 +229,7 @@ function translatePage() {
   renderWholesale();
   renderOperations();
   renderProject();
+  if ($('#product-dialog').open) renderActiveProduct();
 }
 
 function renderFilters() {
@@ -219,23 +237,50 @@ function renderFilters() {
 }
 
 function renderProducts() {
-  const matches = filterProducts(products, { category, query: searchQuery });
+  const matches = filterProducts(products, { category, query: searchQuery }).filter((product) => !favouritesOnly || favourites.includes(product.id));
+  $('#favourites-filter').setAttribute('aria-pressed', String(favouritesOnly));
+  $('#favourites-filter').setAttribute('aria-label', `${copy('Prikaži favorite', 'Show favourites')} (${favourites.length})`);
+  $('#favourites-filter-label').textContent = copy('Favoriti', 'Favourites');
+  $('#favourites-count').textContent = favourites.length;
   const pageCount = Math.ceil(matches.length / cataloguePageSize);
   catalogPage = Math.min(catalogPage, Math.max(0, pageCount - 1));
   const visible = matches.slice(catalogPage * cataloguePageSize, (catalogPage + 1) * cataloguePageSize);
   $('#product-grid').innerHTML = matches.length ? visible.map((product) => {
     const categoryName = categories.find((item) => item.id === product.category).name[language];
+    const media = mediaForProduct(product);
     return `<article class="product-card">
       <div class="product-visual" style="--product-bg:${product.color}45">
         <span class="product-badge">${escapeHTML(product.badge[language])}</span>
-        ${productIllustration(product)}
+        <button type="button" class="product-open" data-product="${product.id}" aria-haspopup="dialog" aria-controls="product-dialog" aria-label="${copy('Pogledaj proizvod', 'View product')}: ${nameOf(product)}">${productPicture(product, language)}<span class="product-detail-hint" aria-hidden="true">${copy('Detalji', 'Details')}${icon('up')}</span></button>
+        ${favouriteButton(product, language, favourites.includes(product.id))}
         <button type="button" class="add-button" data-add="${product.id}" aria-label="${copy('Dodaj u demo košaricu', 'Add to demo basket')}: ${nameOf(product)}">${icon('plus')}</button>
       </div>
-      <div class="product-info"><div><h3>${nameOf(product)}</h3><p>${escapeHTML(categoryName)}</p></div><span class="product-price"><small>DEMO</small>${money(product.priceCents)}</span></div>
-      <p class="product-provenance">${product.provenance === 'manufacturer' ? `${copy('Ilustracija kategorije', 'Category illustration')} · <a href="${escapeHTML(product.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${copy('Proizvođač i izvor', 'Manufacturer and source')}: ${nameOf(product)}">${copy('Proizvođač', 'Manufacturer')} ↗</a>` : copy('OVAMO · koncept proizvoda', 'OVAMO · product concept')}</p>
+      <div class="product-info"><div><h3><button type="button" class="product-title-button" data-product="${product.id}" aria-haspopup="dialog" aria-controls="product-dialog">${nameOf(product)}</button></h3><p>${escapeHTML(categoryName)}</p></div><span class="product-price"><small>DEMO</small>${money(product.priceCents)}</span></div>
+      <p class="product-provenance">${product.provenance === 'manufacturer' ? `${media.images.length ? copy('Fotografija proizvođača', 'Manufacturer photograph') : copy('Ilustracija kategorije', 'Category illustration')} · <a href="${escapeHTML(media.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${copy('Proizvođač i izvor', 'Manufacturer and source')}: ${nameOf(product)}">${copy('Proizvođač', 'Manufacturer')} ↗</a>` : copy('OVAMO · koncept proizvoda', 'OVAMO · product concept')}</p>
     </article>`;
-  }).join('') : `<div class="empty-state"><p>${copy('Za ovaj izbor još nema sitnica. Pokušaj s drugim pojmom.', 'No little finds for this selection. Try another search.')}</p><button type="button" class="button button-outline" data-action="clear-filters">${copy('Prikaži sve proizvode', 'Show all products')}</button></div>`;
+  }).join('') : `<div class="empty-state"><p>${favouritesOnly ? copy('Ovdje će biti tvoji favoriti. Spremi proizvod srcem ili promijeni filtre.', 'Your favourites will appear here. Save a product with its heart or change the filters.') : copy('Za ovaj izbor još nema sitnica. Pokušaj s drugim pojmom.', 'No little finds for this selection. Try another search.')}</p><button type="button" class="button button-outline" data-action="clear-filters">${copy('Prikaži sve proizvode', 'Show all products')}</button></div>`;
   $('#catalog-pagination').innerHTML = matches.length ? `<span class="catalog-page-status">${catalogPage * cataloguePageSize + 1}–${Math.min((catalogPage + 1) * cataloguePageSize, matches.length)} / ${matches.length} ${copy('demo artikala', 'demo items')}</span>${pageCount > 1 ? `<div><button type="button" data-catalog-page="${catalogPage - 1}" ${catalogPage === 0 ? 'disabled' : ''}>← ${copy('Prethodna', 'Previous')}</button><span>${catalogPage + 1} / ${pageCount}</span><button type="button" data-catalog-page="${catalogPage + 1}" ${catalogPage === pageCount - 1 ? 'disabled' : ''}>${copy('Sljedeća', 'Next')} →</button></div>` : ''}` : '';
+}
+
+function renderActiveProduct() {
+  const product = productById.get(activeProductId);
+  if (!product) return;
+  const remaining = remainingProductQuantity(product, cart);
+  productQuantity = remaining > 0 ? Math.min(Math.max(1, productQuantity), remaining) : 0;
+  const categoryName = categories.find((item) => item.id === product.category)?.name[language] ?? '';
+  $('#product-detail-content').innerHTML = renderProductDetails(product, {
+    language, categoryName, favourite: favourites.includes(product.id),
+    quantity: productQuantity, imageIndex: productImageIndex, remaining,
+  });
+}
+
+function openProduct(id, trigger) {
+  if (!productById.has(id)) return;
+  activeProductId = id;
+  productImageIndex = 0;
+  productQuantity = 1;
+  renderActiveProduct();
+  openDialog('product-dialog', trigger);
 }
 
 function renderCity() {
@@ -268,7 +313,7 @@ function renderCart() {
     return;
   }
   $('#cart-content').innerHTML = summary.lines.map(({ product, quantity, lineTotalCents }) => `<div class="cart-item">
-    <div class="cart-item-art" style="background:${product.color}45">${productIllustration(product)}</div>
+    <div class="cart-item-art" style="background:${product.color}45">${productPicture(product, language)}</div>
     <div><h3>${nameOf(product)}</h3>${quantityControl(product.id, quantity, 'cart', quantity >= Math.min(product.stock, 99))}<button type="button" class="remove-item" data-remove="${product.id}" aria-label="${copy('Ukloni', 'Remove')}: ${nameOf(product)}">${copy('Ukloni', 'Remove')}</button></div>
     <span class="cart-item-price">${money(lineTotalCents)}</span>
   </div>`).join('') + `<div class="cart-total"><span>${copy('Demo zbroj', 'Demo total')}</span><strong>${money(summary.totalCents)}</strong></div><div class="notice-box">${copy('Ovo je demonstracija košarice. Nema naplate, poreznog obračuna, dostave ni slanja narudžbe. Tvoj izbor čuva se samo u ovom pregledniku.', 'This is a basket demonstration. There is no payment, tax calculation, delivery or order submission. Your selection is stored only in this browser.')}</div><button type="button" class="button button-plum full-button" data-close="cart-dialog">${copy('Nastavi istraživati', 'Keep exploring')}${icon('arrow')}</button>`;
@@ -338,7 +383,7 @@ function aiResponse() {
 }
 
 function renderProject() {
-  $('#project-content').innerHTML = `<div class="project-copy"><p>${copy('<strong>OVAMO</strong> je odabrani smjer za naziv trgovina tvrtke <strong>Classic Shop</strong>. Ovaj prvi koncept spaja vizualni identitet i način na koji bi povezano poslovanje moglo izgledati.', '<strong>OVAMO</strong> is the selected store-brand direction for <strong>Classic Shop</strong>. This first concept brings together the visual identity and a view of how the connected business could work.')}</p><div class="project-chips"><span>HR / EN</span><span>${copy('Demo katalog', 'Demo collection')}</span><span>${copy('B2B pakiranja', 'B2B packs')}</span><span>${copy('Pregled sustava', 'System overview')}</span></div><h3>${copy('Što možeš isprobati?', 'What can you try?')}</h3><p>${copy('Pretraži 20 oglednih artikala, složi demo košaricu, isprobaj B2B pakiranja i prijam–prijenos–prodaju robe. Galerija prikazuje koncepte aplikacija za stvarni katalog od 2.000+ artikala.', 'Search 20 sample items, build a demo basket, try B2B packs and receive–transfer–sell stock. The gallery shows app concepts for the actual 2,000+ article catalogue.')}</p><h3>${copy('Što slijedi?', 'What comes next?')}</h3><p>${copy('Potvrda imena i prava na brend, stvarni artikli i poslovnice, izbor integracije s postojećim ERP/POS sustavom te razvoj sigurnog poslužiteljskog sustava. GitHub Pages služi za ovaj dizajnerski prototip; komercijalnu trgovinu treba objaviti na prikladnom hostingu.', 'Confirm the name and brand rights, real products and stores, choose an integration with the existing ERP/POS and develop a secure server backend. GitHub Pages hosts this design prototype; the commercial store needs suitable hosting.')}</p><h3>${copy('O podacima', 'About the data')}</h3><p>${copy('Proizvodi proizvođača su prijedlozi uvrštenja, a OVAMO proizvodi su koncepti. Cijene u katalogu, pakiranja, zalihe i graf su ogledni. Slike prikazuju zamišljene trgovine i aplikacije. Demo katalog i sustav ne primaju narudžbe, uplate ni osobne podatke. Vizualni identitet ima zasebnu ponudu i vanjsku Stripe stranicu za plaćanje. Preglednik može lokalno pohraniti jezik i demo košaricu; tipka „Resetiraj demo” briše te postavke.', 'Manufacturer products are proposed additions; OVAMO products are concepts. Catalogue prices, case packs, stock and the chart are illustrative. Images show imagined stores and apps. The demo catalogue and system accept no orders, payments or personal details. The visual identity has a separate offer and an external Stripe payment page. Your browser may store the language and demo basket locally; “Reset the demo” clears those preferences.')}</p><p><a href="./concepts.html">${copy('Galerija aplikacija za 2.000+ artikala', 'App concepts for 2,000+ articles')} ↗</a><br><a href="${repository}/blob/main/docs/stock-and-apps-blueprint.md" target="_blank" rel="noopener noreferrer">${copy('Zalihe, aplikacije i automatizacija', 'Stock, apps and automation blueprint')} ↗</a><br><a href="${repository}/blob/main/docs/business-research.md" target="_blank" rel="noopener noreferrer">${copy('Istraživanje poslovanja i propisa', 'Business and regulatory research')} ↗</a><br><a href="${repository}/blob/main/docs/production-architecture.md" target="_blank" rel="noopener noreferrer">${copy('Plan stvarnog sustava', 'Production system plan')} ↗</a><br><a href="${repository}/blob/main/docs/brand-direction.md" target="_blank" rel="noopener noreferrer">${copy('Vizualni smjer i provjera imena', 'Visual direction and name clearance')} ↗</a></p></div>`;
+  $('#project-content').innerHTML = `<div class="project-copy"><p>${copy('<strong>OVAMO</strong> je odabrani smjer za naziv trgovina tvrtke <strong>Classic Shop</strong>. Ovaj prvi koncept spaja vizualni identitet i način na koji bi povezano poslovanje moglo izgledati.', '<strong>OVAMO</strong> is the selected store-brand direction for <strong>Classic Shop</strong>. This first concept brings together the visual identity and a view of how the connected business could work.')}</p><div class="project-chips"><span>HR / EN</span><span>${copy('Demo katalog', 'Demo collection')}</span><span>${copy('B2B pakiranja', 'B2B packs')}</span><span>${copy('Pregled sustava', 'System overview')}</span></div><h3>${copy('Što možeš isprobati?', 'What can you try?')}</h3><p>${copy('Pretraži 20 oglednih artikala, složi demo košaricu, isprobaj B2B pakiranja i prijam–prijenos–prodaju robe. Galerija prikazuje koncepte aplikacija za stvarni katalog od 2.000+ artikala.', 'Search 20 sample items, build a demo basket, try B2B packs and receive–transfer–sell stock. The gallery shows app concepts for the actual 2,000+ article catalogue.')}</p><h3>${copy('Što slijedi?', 'What comes next?')}</h3><p>${copy('Potvrda imena i prava na brend, stvarni artikli i poslovnice, izbor integracije s postojećim ERP/POS sustavom te razvoj sigurnog poslužiteljskog sustava. GitHub Pages služi za ovaj dizajnerski prototip; komercijalnu trgovinu treba objaviti na prikladnom hostingu.', 'Confirm the name and brand rights, real products and stores, choose an integration with the existing ERP/POS and develop a secure server backend. GitHub Pages hosts this design prototype; the commercial store needs suitable hosting.')}</p><h3>${copy('O podacima', 'About the data')}</h3><p>${copy('Proizvodi proizvođača su prijedlozi uvrštenja, a OVAMO proizvodi su koncepti. Cijene u katalogu, pakiranja, zalihe i graf su ogledni. Slike prikazuju zamišljene trgovine i aplikacije. Demo katalog i sustav ne primaju narudžbe, uplate ni osobne podatke. Vizualni identitet ima zasebnu ponudu i vanjsku Stripe stranicu za plaćanje. Preglednik može lokalno pohraniti jezik, favorite i demo košaricu; tipka „Resetiraj demo” briše te postavke.', 'Manufacturer products are proposed additions; OVAMO products are concepts. Catalogue prices, case packs, stock and the chart are illustrative. Images show imagined stores and apps. The demo catalogue and system accept no orders, payments or personal details. The visual identity has a separate offer and an external Stripe payment page. Your browser may store the language, favourites and demo basket locally; “Reset the demo” clears those preferences.')}</p><p><a href="./concepts.html">${copy('Galerija aplikacija za 2.000+ artikala', 'App concepts for 2,000+ articles')} ↗</a><br><a href="${repository}/blob/main/docs/stock-and-apps-blueprint.md" target="_blank" rel="noopener noreferrer">${copy('Zalihe, aplikacije i automatizacija', 'Stock, apps and automation blueprint')} ↗</a><br><a href="${repository}/blob/main/docs/business-research.md" target="_blank" rel="noopener noreferrer">${copy('Istraživanje poslovanja i propisa', 'Business and regulatory research')} ↗</a><br><a href="${repository}/blob/main/docs/production-architecture.md" target="_blank" rel="noopener noreferrer">${copy('Plan stvarnog sustava', 'Production system plan')} ↗</a><br><a href="${repository}/blob/main/docs/brand-direction.md" target="_blank" rel="noopener noreferrer">${copy('Vizualni smjer i provjera imena', 'Visual direction and name clearance')} ↗</a></p></div>`;
 }
 
 function toast(message) {
@@ -409,13 +454,60 @@ document.addEventListener('click', (event) => {
   if (!button || button.disabled) return;
   const data = button.dataset;
   if (data.close) { document.getElementById(data.close)?.close(); return; }
-  if (data.filter) {
+  if (data.product) {
+    openProduct(data.product, button);
+  } else if (data.favourite) {
+    const inDetails = Boolean(button.closest('#product-dialog'));
+    favourites = toggleFavourite(favourites, data.favourite, products);
+    saveFavourites(storage, favourites, products);
+    renderProducts();
+    if (inDetails) {
+      renderActiveProduct();
+      $('#product-dialog [data-favourite]')?.focus({ preventScroll: true });
+    } else {
+      ($(`#product-grid [data-favourite="${data.favourite}"]`) ?? $('#favourites-filter')).focus({ preventScroll: true });
+    }
+    toast(favourites.includes(data.favourite) ? copy('Dodano u favorite.', 'Added to favourites.') : copy('Uklonjeno iz favorita.', 'Removed from favourites.'));
+  } else if (data.productImage !== undefined) {
+    const imageIndex = Number(data.productImage);
+    const product = productById.get(activeProductId);
+    if (!product || !Number.isSafeInteger(imageIndex) || imageIndex < 0 || imageIndex >= mediaForProduct(product).images.length) return;
+    productImageIndex = imageIndex;
+    renderActiveProduct();
+    $(`#product-dialog [data-product-image="${imageIndex}"]`)?.focus({ preventScroll: true });
+  } else if (data.detailQuantity !== undefined) {
+    const product = productById.get(activeProductId);
+    const step = Number(data.detailQuantity);
+    if (!product || ![-1, 1].includes(step)) return;
+    const remaining = remainingProductQuantity(product, cart);
+    productQuantity = Math.min(remaining, Math.max(1, productQuantity + step));
+    renderActiveProduct();
+    const selected = $(`#product-dialog [data-detail-quantity="${step}"]`);
+    const fallback = $('#product-dialog [data-detail-quantity]:not(:disabled)') ?? $('#product-dialog [data-detail-add]');
+    (selected?.disabled ? fallback : selected)?.focus({ preventScroll: true });
+  } else if (data.detailAdd) {
+    if (data.detailAdd !== activeProductId) return;
+    const before = cartSummary(cart).count;
+    cart = addToCart(cart, activeProductId, productQuantity);
+    const added = cartSummary(cart).count - before;
+    saveCart(storage, cart);
+    renderCart();
+    renderActiveProduct();
+    $('#product-detail-feedback').textContent = added > 0
+      ? `${added} ${copy('kom dodano u demo košaricu.', 'units added to the demo basket.')}`
+      : copy('Dosegnuta je najveća demo količina.', 'The demo quantity limit has been reached.');
+    ($('#product-dialog [data-detail-add]:not(:disabled)') ?? $('#product-dialog [data-detail-cart]'))?.focus({ preventScroll: true });
+  } else if (data.detailCart !== undefined) {
+    const trigger = dialogTriggers.get($('#product-dialog'));
+    openDialog('cart-dialog', trigger?.isConnected ? trigger : $('#favourites-filter'));
+  } else if (data.filter) {
     category = data.filter;
     catalogPage = 0;
     renderWithFocus(renderFilters, 'data-filter', category);
     renderProducts();
   } else if (data.categoryJump) {
     category = data.categoryJump;
+    favouritesOnly = false;
     catalogPage = 0;
     searchQuery = '';
     $('#product-search').value = '';
@@ -489,14 +581,19 @@ document.addEventListener('click', (event) => {
       activeOps = 'movements'; renderOperations(); openDialog('operations-dialog', button);
     }
     else if (data.action === 'browse') { $('#cart-dialog').close(); $('#ponuda').scrollIntoView(); }
-    else if (data.action === 'clear-filters') {
-      category = 'all'; searchQuery = ''; catalogPage = 0; $('#product-search').value = ''; renderFilters(); renderProducts(); $('#product-search').focus();
+    else if (data.action === 'favourites') {
+      favouritesOnly = !favouritesOnly;
+      category = 'all'; searchQuery = ''; catalogPage = 0; $('#product-search').value = '';
+      renderFilters(); renderProducts(); $('#favourites-filter').focus({ preventScroll: true });
+    } else if (data.action === 'clear-filters') {
+      category = 'all'; searchQuery = ''; catalogPage = 0; favouritesOnly = false; $('#product-search').value = ''; renderFilters(); renderProducts(); $('#product-search').focus();
     } else if (data.action === 'quote') {
       quoteVisible = true; renderWithFocus(renderWholesale, 'data-action', 'quote');
       $('.quote-result')?.scrollIntoView({ block: 'nearest' });
     } else if (data.action === 'reset') {
-      try { storage?.removeItem('ovamo-demo-cart-v1'); storage?.removeItem('ovamo-language'); } catch { /* No stored state to remove. */ }
+      try { storage?.removeItem('ovamo-demo-cart-v1'); storage?.removeItem('ovamo-language'); storage?.removeItem(FAVOURITES_KEY); } catch { /* No stored state to remove. */ }
       cart = []; wholesaleCart = []; quoteVisible = false; searchQuery = ''; category = 'all';
+      favourites = []; favouritesOnly = false; activeProductId = null; productImageIndex = 0; productQuantity = 1;
       activeCity = 'split'; activeOps = 'overview'; activeQuestion = 'stock'; language = 'hr';
       catalogPage = 0; stockState = createStockDemo(); supportQuestion = 'order';
       $('#product-search').value = ''; translatePage(); toast('Demo je resetiran. Krenimo iznova.');
@@ -538,7 +635,10 @@ $$('dialog').forEach((dialog) => {
     }
     if (!$$('dialog[open]').length) document.body.classList.remove('dialog-open');
     const trigger = dialogTriggers.get(dialog);
-    if (!$$('dialog[open]').length && trigger?.isConnected) trigger.focus({ preventScroll: true });
+    if (!$$('dialog[open]').length) {
+      if (trigger?.isConnected) trigger.focus({ preventScroll: true });
+      else if (dialog.id === 'product-dialog') ($(`#product-grid [data-product="${activeProductId}"]`) ?? $('#favourites-filter')).focus({ preventScroll: true });
+    }
   });
   dialog.addEventListener('click', (event) => {
     if (event.target !== dialog) return;

@@ -1,0 +1,33 @@
+@keyframes ovamo-enter{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+@keyframes ovamo-image-enter{from{opacity:.55;scale:1.055}to{opacity:1;scale:1}}
+@keyframes ovamo-note-drift{0%,100%{translate:0 0}50%{translate:0 -9px}}
+@keyframes ovamo-answer-enter{from{opacity:.5;translate:0 6px}to{opacity:1;translate:0 0}}
+.motion-ready .site-header::after{position:absolute;content:'';bottom:-1px;left:0;width:100%;height:2px;background:var(--coral);transform-origin:left;transform:scaleX(var(--scroll-progress,0));pointer-events:none}
+.motion-ready .hero-copy,.motion-ready .ai-hero-copy,.motion-ready .concept-hero-grid{animation:ovamo-enter .7s cubic-bezier(.2,.7,.3,1) both}
+.motion-ready .hero-visual .store-photo{animation:ovamo-image-enter 1.15s ease-out both}
+.motion-ready .ai-morning{animation:ovamo-enter .85s cubic-bezier(.2,.7,.3,1) .12s both}
+.motion-ready .hero-sticker{animation:ovamo-note-drift 4.5s ease-in-out .9s 1}
+.motion-ready .motion-pending{opacity:0;translate:0 20px}
+.motion-ready .motion-pending:focus-within{opacity:1;translate:0 0}
+.motion-ready .motion-arrived{animation:ovamo-enter .62s cubic-bezier(.2,.7,.3,1) var(--reveal-delay,0ms) both}
+.motion-ready .button{transition:background .2s,box-shadow .22s,translate .22s}
+.motion-ready .button:hover{translate:0 -2px;box-shadow:0 7px 16px #34263815}
+.motion-ready .button:active{translate:0 0;box-shadow:none}
+.motion-ready .button>.icon,.motion-ready .button>span[aria-hidden],.motion-ready .link-button>.icon,.motion-ready .link-button>span[aria-hidden]{transition:translate .22s}
+.motion-ready .button:hover>.icon,.motion-ready .button:hover>span[aria-hidden],.motion-ready .link-button:hover>.icon,.motion-ready .link-button:hover>span[aria-hidden]{translate:3px 0}
+.motion-ready .workflow-image{transition:scale .5s cubic-bezier(.2,.7,.3,1)}
+.motion-ready .workflow-step:hover .workflow-image{scale:1.025}
+.motion-ready .identity-guide-media{overflow:hidden}
+.motion-ready .identity-guide-media img{transition:scale .65s cubic-bezier(.2,.7,.3,1)}
+.motion-ready .identity-guide-card:hover .identity-guide-media img{scale:1.035}
+.motion-ready .concept-image{transition:scale .65s cubic-bezier(.2,.7,.3,1),opacity .3s}
+.motion-ready .concept-image-link:hover .concept-image{scale:1.02}
+.motion-ready .ai-answer-heading,.motion-ready .ai-draft,.motion-ready .ai-demo-receipt{animation:ovamo-answer-enter .32s ease both}
+.motion-ready .ai-capabilities article{transition:background .25s}
+.motion-ready .ai-capabilities article:hover{background:var(--paper)}
+.motion-ready .ai-capability-symbol,.motion-ready .ai-morning-greeting>span{transition:rotate .5s cubic-bezier(.2,.7,.3,1)}
+.motion-ready .ai-capabilities article:hover .ai-capability-symbol{rotate:-3deg}
+.motion-ready .ai-morning:hover .ai-morning-greeting>span{rotate:45deg}
+.motion-ready .ai-client-buttons button{transition:background .2s,color .2s,border-color .2s}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.motion-pending{opacity:1!important;translate:none!important}*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.site-header::after{display:none}}
+@media print{.motion-pending{opacity:1!important;translate:none!important}.site-header::after{display:none}}
