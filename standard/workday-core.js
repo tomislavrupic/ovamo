@@ -1,7 +1,7 @@
 import {createStockDemo,applyStockEvent} from '../src/stock-demo.js';
 
 // Fictional, in-memory scenario; does not send data or perform business operations.
-export function newDay(){return {stage:0,stock:createStockDemo(),draft:null,receipt:null,sale:null,review:null,cases:{price:'none',damage:'none',complaint:'none'},lastIssue:null,cash:{mid:false,end:false,document:false},closed:false,log:[]};}
+export function newDay(){return {stage:0,stock:createStockDemo(),draft:null,receipt:null,sale:null,review:null,processRecords:{},cases:{price:'none',damage:'none',complaint:'none'},lastIssue:null,cash:{mid:false,end:false,document:false},closed:false,log:[]};}
 const integer=(value,min,max)=>{if(!Number.isSafeInteger(value)||value<min||value>max)throw new Error(`Unesi cijeli broj od ${min} do ${max}.`);return value;};
 export function dayAction(state,action,quantity){
  if(!state||state.closed)throw new Error('Demo dan je već završen.');
@@ -46,5 +46,6 @@ export function dayAdvice(s){
   `Dan je završen. Skladište ${x.warehouse}, na putu ${x.inTransit}, trgovina ${x.shop}; neto prodano ${x.sold} kom.`
  ];
  const draft=s.cases[s.lastIssue]==='draft'?[s.lastIssue,'draft']:Object.entries(s.cases).find(([,status])=>status==='draft');const hints={price:'Za razliku cijene predlažem pregled oznake i potvrđene cijene prije bilo kakve izmjene.',damage:'Za oštećeni artikl predlažem fizički pregled i odluku o izdvajanju; demo nije blokirao zalihu.',complaint:'Za pritužbu predlažem pregled prodaje i nacrt odgovora koji potvrđuje osoba.'};
- return {text:(lines[s.stage]||'Pregledaj trenutačni korak.')+(draft?' '+hints[draft[0]]:''),label:'Pripremljeni odgovor prema demo stanju · nije stvarni AI model'};
+ const records=Object.values(s.processRecords||{}),pending=records.filter(x=>x.status==='draft').length,issues=records.filter(x=>x.status==='reviewed'&&x.flag==='issue').length;
+ return {text:(lines[s.stage]||'Pregledaj trenutačni korak.')+(draft?' '+hints[draft[0]]:'')+(pending?` Otvorenih nacrta procesa: ${pending}; pregledaj ih u katalogu.`:'')+(issues?` Potvrđenih prijava za daljnju provjeru: ${issues}; ništa nije poslano.`:''),label:'Pripremljeni odgovor prema demo stanju · nije stvarni AI model'};
 }
