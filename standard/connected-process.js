@@ -37,13 +37,13 @@ function compose(day,p,input){
 function append(day,kind,text){return [...day.log,{kind:'person',text:kind},{kind:'automation',text}];}
 export function draftProcess(day,id,input){
  live(day);const p=getProcess(id),clean=validate(input),previous=day.processRecords?.[id];
- if(previous?.status==='draft')throw new Error('Nacrt je već otvoren; najprije ga pregledaj.');
+ if(['draft','reviewed'].includes(previous?.status))throw new Error('Zapis je već otvoren; najprije ga dovrši.');
  const calculated=compose(day,p,clean),record={id,title:p.title,chapterId:p.chapterId,input:clean,status:'draft',...calculated};
  return {...day,processRecords:{...day.processRecords,[id]:record},log:append(day,`Pripremljen demo zapis: ${p.title}.`,`Nacrt je u zajedničkom radnom danu; status: ${calculated.flag==='issue'?'potrebna provjera':'uredno'}.`)};
 }
 export function refreshProcess(day,id){
- live(day);const p=getProcess(id),record=day.processRecords?.[id];if(record?.status!=='draft')throw new Error('Nema otvorenog nacrta.');
- const updated={...record,...compose(day,p,record.input)};return {...day,processRecords:{...day.processRecords,[id]:updated},log:append(day,`Osvježen demo zapis: ${p.title}.`,'Kontekst je usklađen s trenutačnim stanjem; ništa nije poslano.')};
+ live(day);const p=getProcess(id),record=day.processRecords?.[id];if(!['draft','reviewed'].includes(record?.status))throw new Error('Nema otvorenog nacrta.');
+ const updated={...record,status:'draft',...compose(day,p,record.input)};return {...day,processRecords:{...day.processRecords,[id]:updated},log:append(day,`Osvježen demo zapis: ${p.title}.`,'Kontekst je usklađen s trenutačnim stanjem; ništa nije poslano.')};
 }
 export function reviewProcess(day,id){
  live(day);const p=getProcess(id),record=day.processRecords?.[id];if(record?.status!=='draft')throw new Error('Nema nacrta za potvrdu.');

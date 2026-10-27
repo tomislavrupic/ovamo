@@ -1,7 +1,7 @@
 import {createStockDemo,applyStockEvent} from '../src/stock-demo.js';
 
 // Fictional, in-memory scenario; does not send data or perform business operations.
-export function newDay(){return {stage:0,stock:createStockDemo(),draft:null,receipt:null,sale:null,review:null,processRecords:{},cases:{price:'none',damage:'none',complaint:'none'},lastIssue:null,cash:{mid:false,end:false,document:false},closed:false,log:[]};}
+export function newDay(){return {stage:0,stock:createStockDemo(),draft:null,receipt:null,sale:null,review:null,processRecords:{},operations:{tasks:[],requests:[],documents:[],checks:{},views:[]},cases:{price:'none',damage:'none',complaint:'none'},lastIssue:null,cash:{mid:false,end:false,document:false},closed:false,log:[]};}
 const integer=(value,min,max)=>{if(!Number.isSafeInteger(value)||value<min||value>max)throw new Error(`Unesi cijeli broj od ${min} do ${max}.`);return value;};
 export function dayAction(state,action,quantity){
  if(!state||state.closed)throw new Error('Demo dan je već završen.');
