@@ -5,7 +5,7 @@ export function perform(state,type,quantity){
  if(!state||ORDER[state.stage]!==type)throw new Error('Otvori sljedeći korak redom.');
  if(!Number.isSafeInteger(quantity)||quantity<=0||quantity>9999)throw new Error('Unesi cijeli broj veći od nule.');
  const stock=applyStockEvent(state.stock,{id:`demo-${type}`,type,quantity,...(type==='receive'?{packSize:24}:{})});
- return {...state,stock,stage:state.stage+1};
+ return {...state,stock,stage:state.stage+1,review:null};
 }
 export function inventoryReview(state,counted){
  if(!Number.isSafeInteger(counted)||counted<0||counted>9999)throw new Error('Unesi stvarno prebrojenu količinu kao cijeli broj.');
