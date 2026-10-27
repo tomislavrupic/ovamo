@@ -30,20 +30,33 @@ function render(query=''){
   });update();details.append(body);chapters.append(details);
  });
 }
-const gateOrigin='https://classic-shop-manual.tom-d-vox.workers.dev';
-let loginWindow=null, loginNonce=null;
-$('#login').addEventListener('click',()=>{
- loginNonce=crypto.randomUUID();
- loginWindow=window.open(gateOrigin+'/?nonce='+encodeURIComponent(loginNonce),'classic-shop-signin','popup,width=600,height=760');
- $('#login-status').textContent=loginWindow?'Dovrši prijavu u otvorenom prozoru.':'Dopusti skočne prozore za prijavu.';
+const cipherUrl='https://classic-shop-unlock.tom-d-vox.workers.dev/manual';
+const salt='TWtCWIX1Pjn7526oZ6u1GQ==', iv='l53SBBgVkzboqjbw';
+const bytes=b64=>Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
+let encryptedPromise=null;
+async function loadEncrypted(){
+ if(!encryptedPromise)encryptedPromise=fetch(cipherUrl,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('network');return r.text()}).then(bytes).catch(error=>{encryptedPromise=null;throw error});
+ return encryptedPromise;
+}
+$('#login-form').addEventListener('submit',async event=>{
+ event.preventDefault();const input=$('#password'),button=$('#login'),status=$('#login-status');button.disabled=true;status.textContent='Otvaramo priručnik…';
+ try{
+  const encrypted=await loadEncrypted();
+  const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(input.value),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt:bytes(salt),iterations:600000},material,{name:'AES-GCM',length:256},false,['decrypt']);
+  let plain;try{plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:bytes(iv),additionalData:new TextEncoder().encode('classic-shop-standard-v1')},key,encrypted)}catch{status.textContent='Lozinka nije točna. Pokušaj ponovno.';return}
+  const payload=JSON.parse(new TextDecoder().decode(plain));openManual(payload);input.value='';
+ }catch(error){status.textContent='Priručnik se trenutačno ne može učitati. Provjeri vezu i pokušaj ponovno.'}finally{button.disabled=false}
 });
-window.addEventListener('message',event=>{
- if(event.origin!==gateOrigin||event.source!==loginWindow||!event.data||event.data.nonce!==loginNonce||event.data.type!=='classic-shop-bundle')return;
- const payload=event.data.bundle;if(!payload||!Array.isArray(payload.sections)||!payload.assets)return;
+function openManual(payload){
+ if(!payload||!Array.isArray(payload.sections)||!payload.assets)throw new Error('invalid');
  sections=payload.sections;privateAssets=payload.assets;
- const original=payload.original;if(original){const bytes=Uint8Array.from(atob(original),c=>c.charCodeAt(0));const url=URL.createObjectURL(new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}));document.querySelectorAll('[data-original-download]').forEach(a=>{a.href=url;a.download='Standard-poslovanja-Classic-Shop.docx';a.removeAttribute('aria-disabled')})}
- $('#login-panel').hidden=true;render();loginWindow.close();loginWindow=null;loginNonce=null;
-});
+ if(payload.original){const originalBytes=bytes(payload.original);const url=URL.createObjectURL(new Blob([originalBytes],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}));document.querySelectorAll('[data-original-download]').forEach(a=>{a.href=url;a.download='Standard-poslovanja-Classic-Shop.docx';a.removeAttribute('aria-disabled')})}
+ $('#login-panel').hidden=true;render();
+}
+const emailGate='https://classic-shop-manual.tom-d-vox.workers.dev';let emailWindow=null,emailNonce=null;
+$('#email-login').addEventListener('click',()=>{emailNonce=crypto.randomUUID();emailWindow=window.open(emailGate+'/?nonce='+encodeURIComponent(emailNonce),'classic-shop-signin','popup,width=600,height=760');$('#login-status').textContent=emailWindow?'Dovrši prijavu u otvorenom prozoru.':'Dopusti skočne prozore za prijavu.'});
+window.addEventListener('message',event=>{if(event.origin!==emailGate||event.source!==emailWindow||!event.data||event.data.nonce!==emailNonce||event.data.type!=='classic-shop-bundle')return;try{openManual(event.data.bundle);emailWindow.close();emailWindow=null;emailNonce=null}catch{$('#login-status').textContent='Priručnik se nije uspio otvoriti. Pokušaj ponovno.'}});
 $('#chapters').replaceChildren(el('p','empty','Prijavi se kako bi otvorio/la sadržaj priručnika.'));
 for(const input of [$('#search'),$('#mobile-search')])input.addEventListener('input',e=>{for(const other of [$('#search'),$('#mobile-search')])if(other!==e.target)other.value=e.target.value;render(e.target.value)});
 $('#close-image').addEventListener('click',()=>$('#image-dialog').close());$('#image-dialog').addEventListener('click',e=>{if(e.target===$('#image-dialog'))$('#image-dialog').close()});
