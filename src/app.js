@@ -189,6 +189,7 @@ const english = {
   workflowStatus: 'Available here: an interactive stock simulation. Planned: live scanning, ERP/POS connections, invoicing and AI support.',
   footerMessage: 'Whenever you need a little something.',
   footerCredit: 'Brand concept for Classic Shop · 2026.',
+  staffManual: 'Staff · sign in ↗',
   resetDemo: 'Reset the demo',
   footerDisclaimer: 'The catalogue, inventory and apps use sample data. The demo catalogue does not accept orders. The visual identity is purchased separately through Stripe.',
   cartTitle: 'Your little collection.',

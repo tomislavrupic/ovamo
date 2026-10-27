@@ -244,7 +244,7 @@ h2{font-size:clamp(34px,4vw,54px);line-height:1.08;letter-spacing:-2.2px;font-we
 .footer-wordmark{font-size:clamp(130px,24vw,345px);line-height:1.16;letter-spacing:-.08em;font-weight:900;display:flex;justify-content:space-between;align-items:center;user-select:none}
 .footer-wordmark>span{font-size:.48em;color:var(--coral);padding-right:.04em;padding-top:.1em}
 .footer-bottom{border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;gap:20px;font-size:10px}
-.footer-bottom>div{display:flex;gap:24px}
+.footer-bottom>div{display:flex;flex-wrap:wrap;gap:24px}
 .footer-disclaimer{color:var(--muted);font-size:9px;line-height:1.7;max-width:760px;margin:16px 0 0}
 dialog{border:0;color:var(--plum);background:var(--paper);box-shadow:0 25px 100px #1e152e33;padding:30px;max-height:90dvh;border-radius:18px}
 dialog::backdrop{background:#24172975;backdrop-filter:blur(5px)}
