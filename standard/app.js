@@ -68,6 +68,7 @@ function routeProposal(){
  document.querySelector('.topbar').hidden=requested&&ready;
  if(requested&&ready){window.scrollTo(0,0);window.dispatchEvent(new Event('proposal:open'))}
  else if(requested&&!ready){document.querySelector('#login-panel').scrollIntoView({behavior:'smooth'});document.querySelector('#login-status').textContent='Najprije se prijavi za pregled predloženog sustava.'}
+ else if(!requested&&ready&&location.hash.startsWith('#poglavlje-')){const target=document.getElementById(location.hash.slice(1));if(target){target.open=true;requestAnimationFrame(()=>target.scrollIntoView({block:'start'}))}}
 }
 window.addEventListener('hashchange',routeProposal);
 if(location.hash==='#prijedlog')routeProposal();
