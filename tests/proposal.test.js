@@ -1,0 +1,7 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {newJourney,perform,inventoryReview,answerDemo} from '../standard/proposal-core.js';
+test('guided sample keeps stock correct across receipt, dispatch, arrival and sale',()=>{let s=newJourney();s=perform(s,'receive',10);s=perform(s,'dispatch',48);s=perform(s,'accept',48);s=perform(s,'sell',3);assert.deepEqual([s.stock.warehouse,s.stock.inTransit,s.stock.shop,s.stock.sold],[192,0,45,3]);assert.equal(s.stage,4)});
+test('rejects out-of-order steps and excess quantities without mutating state',()=>{const s=newJourney();assert.throws(()=>perform(s,'dispatch',48));const r=perform(s,'receive',1);assert.throws(()=>perform(r,'dispatch',25));assert.equal(r.stock.warehouse,24)});
+test('partial arrival leaves unreceived goods in transit',()=>{let s=perform(perform(newJourney(),'receive',3),'dispatch',48);s=perform(s,'accept',30);assert.equal(s.stock.inTransit,18);assert.equal(s.stock.shop,30)});
+test('inventory review calculates discrepancy without changing stock',()=>{let s=perform(perform(perform(newJourney(),'receive',3),'dispatch',48),'accept',48);let review=inventoryReview(s,45);assert.equal(review.difference,-3);assert.equal(s.stock.shop,48)});
+test('assistant reports the current demo state and does not claim a real connection',()=>{let s=perform(newJourney(),'receive',2);assert.match(answerDemo('koliko zaliha',s),/48/);assert.match(answerDemo('nešto nepovezano',s),/demo/i)});

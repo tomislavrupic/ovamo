@@ -52,7 +52,7 @@ function openManual(payload){
  if(!payload||!Array.isArray(payload.sections)||!payload.assets)throw new Error('invalid');
  sections=payload.sections;privateAssets=payload.assets;
  if(payload.original){const originalBytes=bytes(payload.original);const url=URL.createObjectURL(new Blob([originalBytes],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}));document.querySelectorAll('[data-original-download]').forEach(a=>{a.href=url;a.download='Standard-poslovanja-Classic-Shop.docx';a.removeAttribute('aria-disabled')})}
- $('#login-panel').hidden=true;render();
+ $('#login-panel').hidden=true;render();routeProposal();
 }
 const emailGate='https://classic-shop-manual.tom-d-vox.workers.dev';let emailWindow=null,emailNonce=null;
 $('#email-login').addEventListener('click',()=>{emailNonce=crypto.randomUUID();emailWindow=window.open(emailGate+'/?nonce='+encodeURIComponent(emailNonce),'classic-shop-signin','popup,width=600,height=760');$('#login-status').textContent=emailWindow?'Dovrši prijavu u otvorenom prozoru.':'Dopusti skočne prozore za prijavu.'});
@@ -60,3 +60,14 @@ window.addEventListener('message',event=>{if(event.origin!==emailGate||event.sou
 $('#chapters').replaceChildren(el('p','empty','Prijavi se kako bi otvorio/la sadržaj priručnika.'));
 for(const input of [$('#search'),$('#mobile-search')])input.addEventListener('input',e=>{for(const other of [$('#search'),$('#mobile-search')])if(other!==e.target)other.value=e.target.value;render(e.target.value)});
 $('#close-image').addEventListener('click',()=>$('#image-dialog').close());$('#image-dialog').addEventListener('click',e=>{if(e.target===$('#image-dialog'))$('#image-dialog').close()});
+
+function routeProposal(){
+ const requested=location.hash==='#prijedlog';const ready=sections.length>0;
+ document.querySelector('#proposal-root').hidden=!(requested&&ready);
+ document.querySelector('.shell').hidden=requested&&ready;
+ document.querySelector('.topbar').hidden=requested&&ready;
+ if(requested&&ready){window.scrollTo(0,0);window.dispatchEvent(new Event('proposal:open'))}
+ else if(requested&&!ready){document.querySelector('#login-panel').scrollIntoView({behavior:'smooth'});document.querySelector('#login-status').textContent='Najprije se prijavi za pregled predloženog sustava.'}
+}
+window.addEventListener('hashchange',routeProposal);
+if(location.hash==='#prijedlog')routeProposal();
